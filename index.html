@@ -715,29 +715,45 @@
 
         .modal-close:hover { background: rgba(255,255,255,0.12); color: var(--text); }
 
-        /* ── ARROW ── */
-        .video-arrow {
+        /* ── ARROWS ── */
+        .video-container {
+            width: 100%;
+            position: relative;
+            margin-top: 20px;
+        }
+
+        .video-arrow-left,
+        .video-arrow-right {
+            position: absolute;
+            top: -44px;
             display: flex;
-            align-items: flex-end;
-            gap: 8px;
-            margin-top: 12px;
-            align-self: flex-start;
-            margin-left: 24px;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
             animation: arrowBounce 2s ease-in-out infinite;
         }
 
-        .video-arrow span {
-            font-size: 13px;
+        .video-arrow-left  { left: 40px; }
+        .video-arrow-right { right: 40px; animation-delay: 0.3s; }
+
+        .video-arrow-left span,
+        .video-arrow-right span {
+            font-size: 12px;
             color: var(--red);
             font-weight: 600;
-            letter-spacing: 0.5px;
-            margin-bottom: 6px;
             font-style: italic;
+            letter-spacing: 0.3px;
+            opacity: 0.85;
         }
 
         @keyframes arrowBounce {
-            0%, 100% { transform: translateY(0); }
-            50%       { transform: translateY(6px); }
+            0%, 100% { transform: translateY(0px); }
+            50%       { transform: translateY(7px); }
+        }
+
+        @media (max-width: 640px) {
+            .video-arrow-left  { left: 16px; }
+            .video-arrow-right { right: 16px; }
         }
 
         /* ── VIDEO PLACEHOLDER ── */
@@ -892,26 +908,40 @@
             La Sphère, c'est un accompagnement <strong>de bout en bout</strong> — du branding à la vente, du build au déploiement. On ne te laisse pas dans le tunnel. On construit ton agence ensemble.
         </p>
 
-        <!-- ARROW -->
-        <div class="video-arrow">
-            <svg width="48" height="64" viewBox="0 0 48 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M8 4 C8 4, 6 28, 28 44" stroke="#cc0000" stroke-width="2" stroke-linecap="round" fill="none"/>
-                <path d="M28 44 L20 38 M28 44 L24 52" stroke="#cc0000" stroke-width="2" stroke-linecap="round" fill="none"/>
-            </svg>
-            <span>Regarde</span>
-        </div>
+        <!-- VIDEO + ARROWS -->
+        <div class="video-container">
 
-        <!-- VIDEO PLACEHOLDER -->
-        <div class="video-wrap">
-            <!-- Remplace src par ton fichier vidéo quand prêt -->
-            <!-- <video src="video.mp4" controls poster=""></video> -->
-            <div class="video-placeholder-inner">
-                <div class="video-play-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--red)"><path d="M8 5v14l11-7z"/></svg>
-                </div>
-                <span>Vidéo de présentation — bientôt disponible</span>
+            <!-- Flèche gauche -->
+            <div class="video-arrow-left">
+                <span>Regarde</span>
+                <svg width="36" height="52" viewBox="0 0 36 52" fill="none">
+                    <path d="M18 2 C14 12, 8 24, 6 36 C5 40, 5 44, 8 48" stroke="#cc0000" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+                    <path d="M8 48 L3 40" stroke="#cc0000" stroke-width="1.8" stroke-linecap="round"/>
+                    <path d="M8 48 L15 42" stroke="#cc0000" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
             </div>
-        </div>
+
+            <!-- Flèche droite (miroir) -->
+            <div class="video-arrow-right">
+                <span>Regarde</span>
+                <svg width="36" height="52" viewBox="0 0 36 52" fill="none" style="transform:scaleX(-1)">
+                    <path d="M18 2 C14 12, 8 24, 6 36 C5 40, 5 44, 8 48" stroke="#cc0000" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+                    <path d="M8 48 L3 40" stroke="#cc0000" stroke-width="1.8" stroke-linecap="round"/>
+                    <path d="M8 48 L15 42" stroke="#cc0000" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+            </div>
+
+            <div class="video-wrap">
+                <!-- <video src="video.mp4" controls poster=""></video> -->
+                <div class="video-placeholder-inner">
+                    <div class="video-play-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--red)"><path d="M8 5v14l11-7z"/></svg>
+                    </div>
+                    <span>Vidéo de présentation — bientôt disponible</span>
+                </div>
+            </div>
+
+        </div><!-- /video-container -->
 
         <div class="hero-bottom">
             <div class="hero-proof">
