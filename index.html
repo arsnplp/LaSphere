@@ -100,11 +100,11 @@
 
         .hero-title {
             font-family: var(--font-title);
-            font-size: clamp(40px, 5.5vw, 72px);
+            font-size: clamp(36px, 7vw, 92px);
             font-weight: 800;
-            letter-spacing: -2.5px;
-            line-height: 1.05;
-            margin-bottom: 24px;
+            letter-spacing: -3px;
+            line-height: 1.0;
+            margin-bottom: 16px;
         }
 
         .hero-title .accent { color: var(--red); }
@@ -116,14 +116,24 @@
         }
 
         .hero-sub {
-            font-size: 17px;
+            font-size: 16px;
             color: var(--muted);
-            line-height: 1.7;
-            max-width: 520px;
-            margin-bottom: 36px;
+            line-height: 1.65;
+            max-width: 680px;
+            margin-bottom: 0;
         }
 
         .hero-sub strong { color: var(--text); font-weight: 600; }
+
+        .hero-bottom {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 24px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
 
         .hero-proof {
             display: flex;
@@ -708,8 +718,7 @@
         /* ── VIDEO PLACEHOLDER ── */
         .video-wrap {
             width: 100%;
-            max-width: 760px;
-            margin: 48px auto 0;
+            margin: 24px auto 0;
             aspect-ratio: 16/9;
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -755,10 +764,8 @@
         .hero-cta-row {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 14px;
-            margin-top: 36px;
-            flex-wrap: wrap;
+            gap: 10px;
+            flex-shrink: 0;
         }
 
         .btn-red {
@@ -825,9 +832,15 @@
         .form-success p { font-size: 14px; color: var(--muted); line-height: 1.6; }
 
         /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .hero-bottom { flex-direction: column; align-items: flex-start; gap: 16px; }
+            .hero-cta-row { flex-wrap: wrap; }
+        }
+
         @media (max-width: 640px) {
             .nav { padding: 16px 20px; }
-            .hero { padding: 100px 20px 60px; }
+            .hero { padding: 90px 20px 28px !important; }
+            .hero-title { letter-spacing: -2px; }
             .section { padding: 70px 20px; }
             .footer { padding: 24px 20px; flex-direction: column; gap: 12px; text-align: center; }
             .fields-grid { grid-template-columns: 1fr; }
@@ -844,33 +857,31 @@
     </nav>
 
     <!-- HERO -->
-    <section class="hero" id="hero" style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 40px 80px;">
+    <section class="hero" id="hero" style="min-height:100vh;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;text-align:left;padding:90px 60px 32px;max-width:1200px;margin:0 auto;width:100%;">
 
         <div class="hero-tag">Accompagnement • Places limitées</div>
         <h1 class="hero-title">
-            De zéro<br>
-            <span class="accent">au premier</span><br>
-            <span class="line-2">contrat signé.</span>
+            De zéro <span class="accent">au premier</span> <span class="line-2">contrat signé.</span>
         </h1>
-        <p class="hero-sub" style="margin:0 auto 0;">
-            La Sphère, c'est un accompagnement <strong>de bout en bout</strong> — du branding à la vente, du build au déploiement.<br>
-            On ne te laisse pas dans le tunnel. On construit ton agence ensemble.
+        <p class="hero-sub">
+            La Sphère, c'est un accompagnement <strong>de bout en bout</strong> — du branding à la vente, du build au déploiement. On ne te laisse pas dans le tunnel. On construit ton agence ensemble.
         </p>
 
-        <div class="hero-proof" style="justify-content:center;margin-top:28px;">
-            <div class="hero-proof-item">Closing inclus</div>
-            <span class="proof-sep">·</span>
-            <div class="hero-proof-item">Technique incluse</div>
-            <span class="proof-sep">·</span>
-            <div class="hero-proof-item">Suivi personnalisé</div>
-        </div>
-
-        <div class="hero-cta-row">
-            <button class="btn-red" onclick="openModal()">
-                Rejoindre le programme
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </button>
-            <a href="#programme" class="btn-ghost">Voir le programme</a>
+        <div class="hero-bottom">
+            <div class="hero-proof">
+                <div class="hero-proof-item">Closing inclus</div>
+                <span class="proof-sep">·</span>
+                <div class="hero-proof-item">Technique incluse</div>
+                <span class="proof-sep">·</span>
+                <div class="hero-proof-item">Suivi personnalisé</div>
+            </div>
+            <div class="hero-cta-row">
+                <button class="btn-red" onclick="openModal()">
+                    Rejoindre le programme
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+                <a href="#programme" class="btn-ghost">Voir le programme</a>
+            </div>
         </div>
 
         <!-- VIDEO PLACEHOLDER -->
