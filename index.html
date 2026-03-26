@@ -715,6 +715,31 @@
 
         .modal-close:hover { background: rgba(255,255,255,0.12); color: var(--text); }
 
+        /* ── ARROW ── */
+        .video-arrow {
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            margin-top: 12px;
+            align-self: flex-start;
+            margin-left: 24px;
+            animation: arrowBounce 2s ease-in-out infinite;
+        }
+
+        .video-arrow span {
+            font-size: 13px;
+            color: var(--red);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+            font-style: italic;
+        }
+
+        @keyframes arrowBounce {
+            0%, 100% { transform: translateY(0); }
+            50%       { transform: translateY(6px); }
+        }
+
         /* ── VIDEO PLACEHOLDER ── */
         .video-wrap {
             width: 100%;
@@ -866,6 +891,15 @@
         <p class="hero-sub">
             La Sphère, c'est un accompagnement <strong>de bout en bout</strong> — du branding à la vente, du build au déploiement. On ne te laisse pas dans le tunnel. On construit ton agence ensemble.
         </p>
+
+        <!-- ARROW -->
+        <div class="video-arrow">
+            <svg width="48" height="64" viewBox="0 0 48 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 4 C8 4, 6 28, 28 44" stroke="#cc0000" stroke-width="2" stroke-linecap="round" fill="none"/>
+                <path d="M28 44 L20 38 M28 44 L24 52" stroke="#cc0000" stroke-width="2" stroke-linecap="round" fill="none"/>
+            </svg>
+            <span>Regarde</span>
+        </div>
 
         <!-- VIDEO PLACEHOLDER -->
         <div class="video-wrap">
