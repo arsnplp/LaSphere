@@ -649,6 +649,150 @@
             .prog-grid { grid-template-columns: 1fr; }
         }
 
+        /* ── MODAL ── */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 36px 32px;
+            width: 100%;
+            max-width: 480px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s;
+            scrollbar-width: thin;
+        }
+
+        .modal-overlay.active .modal-box {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px; right: 16px;
+            width: 32px; height: 32px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            font-size: 16px; color: var(--muted);
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover { background: rgba(255,255,255,0.12); color: var(--text); }
+
+        /* ── VIDEO PLACEHOLDER ── */
+        .video-wrap {
+            width: 100%;
+            max-width: 760px;
+            margin: 48px auto 0;
+            aspect-ratio: 16/9;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-wrap video {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .video-placeholder-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            color: var(--muted);
+        }
+
+        .video-play-icon {
+            width: 64px; height: 64px;
+            background: rgba(204,0,0,0.15);
+            border: 1.5px solid rgba(204,0,0,0.3);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .video-play-icon svg { margin-left: 4px; }
+
+        .video-placeholder-inner span {
+            font-size: 13px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* ── HERO CENTERED ── */
+        .hero-cta-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            margin-top: 36px;
+            flex-wrap: wrap;
+        }
+
+        .btn-red {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--red);
+            color: #fff;
+            padding: 15px 32px;
+            border-radius: 100px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+            border: none;
+            font-family: var(--font);
+        }
+        .btn-red:hover { background: var(--red-light); transform: translateY(-1px); }
+
+        .btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: transparent;
+            color: var(--muted);
+            padding: 15px 24px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 500;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+        .btn-ghost:hover { color: var(--text); border-color: #444; }
+
         /* ── SCROLLBAR ── */
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: var(--bg); }
@@ -681,29 +825,13 @@
         .form-success p { font-size: 14px; color: var(--muted); line-height: 1.6; }
 
         /* ── RESPONSIVE ── */
-        @media (max-width: 900px) {
-            .hero {
-                grid-template-columns: 1fr;
-                padding-top: 100px;
-                gap: 48px;
-            }
-            .form-card { position: static; }
-            .program-grid { grid-template-columns: 1fr; }
-            .who-wrap { grid-template-columns: 1fr; gap: 40px; }
-            .contact-bar { flex-direction: column; align-items: flex-start; }
-            .contact-links { flex-wrap: wrap; }
-        }
-
         @media (max-width: 640px) {
             .nav { padding: 16px 20px; }
-            .hero { padding: 90px 20px 60px; }
+            .hero { padding: 100px 20px 60px; }
             .section { padding: 70px 20px; }
-            .mid-cta { padding: 60px 20px; }
-            .bottom-form-section { padding: 60px 20px; }
-            .bottom-form-card { padding: 32px 24px; }
-            .contact-bar { padding: 50px 20px; }
             .footer { padding: 24px 20px; flex-direction: column; gap: 12px; text-align: center; }
             .fields-grid { grid-template-columns: 1fr; }
+            .modal-box { padding: 28px 20px; }
         }
     </style>
 </head>
@@ -712,38 +840,61 @@
     <!-- NAV -->
     <nav class="nav">
         <div class="nav-logo">La <span>Sphère</span></div>
-        <a href="#candidater" class="nav-cta">Rejoindre le programme →</a>
+        <button class="nav-cta" onclick="openModal()">Rejoindre le programme →</button>
     </nav>
 
     <!-- HERO -->
-    <section class="hero" id="hero">
+    <section class="hero" id="hero" style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 40px 80px;">
 
-        <div class="hero-left">
-            <div class="hero-tag">Accompagnement • Places limitées</div>
-            <h1 class="hero-title">
-                De zéro<br>
-                <span class="accent">au premier</span><br>
-                <span class="line-2">contrat signé.</span>
-            </h1>
-            <p class="hero-sub">
-                La Sphère, c'est un accompagnement <strong>de bout en bout</strong> — du branding à la vente, du build au déploiement.<br>
-                On ne te laisse pas dans le tunnel. On construit ton agence ensemble.
-            </p>
-            <div class="hero-proof">
-                <div class="hero-proof-item">Closing inclus</div>
-                <span class="proof-sep">·</span>
-                <div class="hero-proof-item">Technique incluse</div>
-                <span class="proof-sep">·</span>
-                <div class="hero-proof-item">Suivi personnalisé</div>
+        <div class="hero-tag">Accompagnement • Places limitées</div>
+        <h1 class="hero-title">
+            De zéro<br>
+            <span class="accent">au premier</span><br>
+            <span class="line-2">contrat signé.</span>
+        </h1>
+        <p class="hero-sub" style="margin:0 auto 0;">
+            La Sphère, c'est un accompagnement <strong>de bout en bout</strong> — du branding à la vente, du build au déploiement.<br>
+            On ne te laisse pas dans le tunnel. On construit ton agence ensemble.
+        </p>
+
+        <div class="hero-proof" style="justify-content:center;margin-top:28px;">
+            <div class="hero-proof-item">Closing inclus</div>
+            <span class="proof-sep">·</span>
+            <div class="hero-proof-item">Technique incluse</div>
+            <span class="proof-sep">·</span>
+            <div class="hero-proof-item">Suivi personnalisé</div>
+        </div>
+
+        <div class="hero-cta-row">
+            <button class="btn-red" onclick="openModal()">
+                Rejoindre le programme
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+            <a href="#programme" class="btn-ghost">Voir le programme</a>
+        </div>
+
+        <!-- VIDEO PLACEHOLDER -->
+        <div class="video-wrap">
+            <!-- Remplace src par ton fichier vidéo quand prêt -->
+            <!-- <video src="video.mp4" controls poster=""></video> -->
+            <div class="video-placeholder-inner">
+                <div class="video-play-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--red)"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+                <span>Vidéo de présentation — bientôt disponible</span>
             </div>
         </div>
 
-        <!-- FORM CARD HERO -->
-        <div class="form-card" id="candidater">
+    </section>
+
+    <!-- MODAL FORMULAIRE -->
+    <div class="modal-overlay" id="modal" onclick="closeModalOutside(event)">
+        <div class="modal-box">
+            <div class="modal-close" onclick="closeModal()">✕</div>
 
             <div class="form-body">
                 <div class="form-card-title">Réserve ta place</div>
-                <div class="form-card-sub">Réponds à 2 questions et laisse tes coordonnées. Je te recontacte sous 24h.</div>
+                <div class="form-card-sub">Réponds aux questions et laisse tes coordonnées. Je te recontacte sous 24h.</div>
 
                 <!-- Q1 -->
                 <div class="q-block">
@@ -835,7 +986,6 @@
 
                 <hr class="form-divider">
 
-                <!-- Fields -->
                 <div class="fields-grid">
                     <div class="field-wrap">
                         <label>Prénom</label>
@@ -867,9 +1017,8 @@
                 <h3>Candidature reçue !</h3>
                 <p>Je te recontacte dans les <strong>24h</strong> pour valider ta place dans la Sphère.</p>
             </div>
-
         </div>
-    </section>
+    </div>
 
     <!-- PROGRAMME -->
     <section class="prog-section">
@@ -933,6 +1082,23 @@
     <script>
         const SUPABASE_URL  = 'https://nrynnpnsmtfcossqommp.supabase.co';
         const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5yeW5ucG5zbXRmY29zc3FvbW1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc5MDkwNjIsImV4cCI6MjA4MzQ4NTA2Mn0.bDNlJPU3wPrzInzwvWtDAvLWYrkYNoQZVv2TiSTtcvo';
+
+        // Modal
+        function openModal() {
+            document.getElementById('modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function closeModalOutside(e) {
+            if (e.target === document.getElementById('modal')) closeModal();
+        }
+
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
         // Radio option selection
         function selectOption(el) {
