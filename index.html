@@ -725,15 +725,15 @@
         .video-arrow-left,
         .video-arrow-right {
             position: absolute;
-            top: -60px;
+            top: -72px;
             display: flex;
-            align-items: flex-end;
-            gap: 8px;
+            flex-direction: column;
+            gap: 2px;
             pointer-events: none;
         }
 
-        .video-arrow-left  { left: 60px; animation: bounceLeft 2s ease-in-out infinite; }
-        .video-arrow-right { right: 60px; flex-direction: row-reverse; animation: bounceRight 2s ease-in-out infinite; animation-delay: 0.25s; }
+        .video-arrow-left  { left: 60px; align-items: flex-start; animation: bounceLeft 2s ease-in-out infinite; }
+        .video-arrow-right { right: 60px; align-items: flex-end; animation: bounceRight 2s ease-in-out infinite; animation-delay: 0.25s; }
 
         .video-arrow-left span,
         .video-arrow-right span {
