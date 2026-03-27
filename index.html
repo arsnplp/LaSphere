@@ -874,11 +874,38 @@
             margin-bottom: 28px;
         }
 
-        .reviews-grid {
+        .reviews-wrap {
             display: grid;
-            grid-template-columns: repeat(2, 340px);
+            grid-template-columns: 1fr 1fr 1fr;
             gap: 20px;
-            justify-content: center;
+            align-items: start;
+        }
+
+        .reviews-left {
+            padding-right: 20px;
+            padding-top: 8px;
+        }
+
+        .reviews-left h2 {
+            font-family: var(--font-title);
+            font-size: clamp(26px, 3vw, 38px);
+            font-weight: 700;
+            letter-spacing: -1.5px;
+            line-height: 1.15;
+            margin-bottom: 16px;
+        }
+
+        .reviews-left h2 span { color: var(--red); }
+
+        .reviews-left p {
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.7;
+            margin-bottom: 28px;
+        }
+
+        .reviews-grid {
+            display: contents;
         }
 
         .review-card {
@@ -967,9 +994,14 @@
             letter-spacing: -0.5px;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
+            .reviews-wrap { grid-template-columns: 1fr 1fr; }
+            .reviews-left { grid-column: 1 / -1; padding-right: 0; }
+        }
+
+        @media (max-width: 600px) {
             .reviews-section { padding: 50px 20px; }
-            .reviews-grid { grid-template-columns: 1fr; max-width: 340px; margin: 0 auto; }
+            .reviews-wrap { grid-template-columns: 1fr; }
         }
 
         /* ── SCROLLBAR ── */
@@ -1098,6 +1130,18 @@
     <section class="reviews-section">
         <div class="reviews-inner">
             <div class="reviews-label">Ils l'ont fait. Toi aussi tu peux.</div>
+            <div class="reviews-wrap">
+
+                <!-- Texte gauche -->
+                <div class="reviews-left">
+                    <h2>Des résultats<br><span>concrets.</span><br>Pas des promesses.</h2>
+                    <p>Rémi est passé de zéro connaissance à 3 000 €/mois. Quentin a contracté plus de 15 000 € en 4 mois. Deux parcours différents, une seule méthode.</p>
+                    <button class="btn-red" onclick="openModal()" style="font-size:14px;padding:12px 24px;">
+                        Je veux le même résultat
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
+
             <div class="reviews-grid">
 
                 <!-- Rémi -->
@@ -1334,6 +1378,7 @@
 
             </div>
 
+            </div><!-- /reviews-wrap -->
         </div>
     </section>
 
