@@ -876,73 +876,100 @@
 
         .reviews-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
+            grid-template-columns: repeat(2, 340px);
+            gap: 20px;
+            justify-content: center;
         }
 
         .review-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 18px;
-            padding: 32px;
+            border-radius: 20px;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            gap: 16px;
             transition: border-color 0.3s;
         }
 
         .review-card:hover { border-color: rgba(204,0,0,0.3); }
 
-        .review-stat {
-            font-family: var(--font-title);
-            font-size: 42px;
-            font-weight: 800;
-            letter-spacing: -2px;
-            color: var(--red);
-            line-height: 1;
+        .review-video-wrap {
+            width: 100%;
+            aspect-ratio: 9/16;
+            background: #0d0d0d;
+            position: relative;
+            overflow: hidden;
         }
 
-        .review-stat span {
-            font-size: 16px;
-            font-weight: 500;
+        .review-video-wrap iframe,
+        .review-video-wrap video {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        .review-video-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
             color: var(--muted);
-            letter-spacing: 0;
         }
 
-        .review-text {
-            font-size: 14px;
-            color: var(--muted);
-            line-height: 1.7;
-            flex: 1;
+        .review-video-placeholder .play-icon {
+            width: 52px; height: 52px;
+            background: var(--red-dim);
+            border: 1px solid rgba(204,0,0,0.3);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
         }
 
-        .review-text strong { color: var(--text); font-weight: 600; }
+        .review-video-placeholder span { font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
+
+        .review-footer {
+            padding: 20px 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
 
         .review-author {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding-top: 16px;
-            border-top: 1px solid var(--border);
+            gap: 10px;
         }
 
         .review-avatar {
-            width: 38px; height: 38px;
+            width: 36px; height: 36px;
             background: var(--red-dim);
             border: 1px solid rgba(204,0,0,0.25);
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            font-weight: 700; font-size: 15px;
+            font-weight: 700; font-size: 14px;
             color: var(--red);
             flex-shrink: 0;
         }
 
         .review-name { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
-        .review-detail { font-size: 12px; color: var(--muted); }
+        .review-detail { font-size: 11px; color: var(--muted); }
+
+        .review-badge {
+            font-family: var(--font-title);
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--red);
+            white-space: nowrap;
+            letter-spacing: -0.5px;
+        }
 
         @media (max-width: 768px) {
             .reviews-section { padding: 50px 20px; }
-            .reviews-grid { grid-template-columns: 1fr; }
+            .reviews-grid { grid-template-columns: 1fr; max-width: 340px; margin: 0 auto; }
         }
 
         /* ── SCROLLBAR ── */
@@ -1073,27 +1100,50 @@
             <div class="reviews-label">Ils l'ont fait. Toi aussi tu peux.</div>
             <div class="reviews-grid">
 
+                <!-- Rémi -->
                 <div class="review-card">
-                    <div class="review-stat">3 000 €<span>/mois</span></div>
-                    <p class="review-text">Rémi est arrivé sans aucune connaissance technique ni réseau. En quelques mois dans La Sphère, il a maîtrisé le build, closé ses premiers clients et atteint <strong>3k€/mois</strong> de revenus récurrents.</p>
-                    <div class="review-author">
-                        <div class="review-avatar">R</div>
-                        <div>
-                            <div class="review-name">Rémi</div>
-                            <div class="review-detail">0 connaissance → 3 000 €/mois</div>
+                    <div class="review-video-wrap">
+                        <!-- Remplace par le lien Wistia de Rémi quand prêt -->
+                        <div class="review-video-placeholder">
+                            <div class="play-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--red)"><path d="M8 5v14l11-7z"/></svg>
+                            </div>
+                            <span>Vidéo Rémi — bientôt</span>
                         </div>
+                    </div>
+                    <div class="review-footer">
+                        <div class="review-author">
+                            <div class="review-avatar">R</div>
+                            <div>
+                                <div class="review-name">Rémi</div>
+                                <div class="review-detail">0 connaissance au départ</div>
+                            </div>
+                        </div>
+                        <div class="review-badge">3k€/mois</div>
                     </div>
                 </div>
 
+                <!-- Quentin -->
                 <div class="review-card">
-                    <div class="review-stat">15 000 €<span> contractés</span></div>
-                    <p class="review-text">Quentin a appliqué la méthode closing dès la phase 2. En 4 mois, il a signé plusieurs contrats pour un total de <strong>plus de 15 000 €</strong> — tout en construisant son infrastructure en parallèle.</p>
-                    <div class="review-author">
-                        <div class="review-avatar">Q</div>
-                        <div>
-                            <div class="review-name">Quentin</div>
-                            <div class="review-detail">+15 000 € contractés en 4 mois</div>
+                    <div class="review-video-wrap">
+                        <iframe
+                            src="https://fast.wistia.net/embed/iframe/uuq255pesz?videoFoam=true&autoPlay=false"
+                            allowtransparency="true"
+                            frameborder="0"
+                            scrolling="no"
+                            allow="autoplay; fullscreen"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="review-footer">
+                        <div class="review-author">
+                            <div class="review-avatar">Q</div>
+                            <div>
+                                <div class="review-name">Quentin</div>
+                                <div class="review-detail">En 4 mois</div>
+                            </div>
                         </div>
+                        <div class="review-badge">+15k€ contractés</div>
                     </div>
                 </div>
 
