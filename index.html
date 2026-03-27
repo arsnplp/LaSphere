@@ -844,6 +844,107 @@
         }
         .btn-ghost:hover { color: var(--text); border-color: #444; }
 
+        /* ── WEBAPP LABEL ── */
+        .hero-webapp-label {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--muted);
+            letter-spacing: 0.3px;
+            margin-bottom: 10px;
+            margin-top: -4px;
+        }
+
+        /* ── REVIEWS ── */
+        .reviews-section {
+            border-top: 1px solid var(--border);
+            padding: 64px 60px;
+        }
+
+        .reviews-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .reviews-label {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 28px;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .review-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .review-card:hover { border-color: rgba(204,0,0,0.3); }
+
+        .review-stat {
+            font-family: var(--font-title);
+            font-size: 42px;
+            font-weight: 800;
+            letter-spacing: -2px;
+            color: var(--red);
+            line-height: 1;
+        }
+
+        .review-stat span {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--muted);
+            letter-spacing: 0;
+        }
+
+        .review-text {
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.7;
+            flex: 1;
+        }
+
+        .review-text strong { color: var(--text); font-weight: 600; }
+
+        .review-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        .review-avatar {
+            width: 38px; height: 38px;
+            background: var(--red-dim);
+            border: 1px solid rgba(204,0,0,0.25);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 15px;
+            color: var(--red);
+            flex-shrink: 0;
+        }
+
+        .review-name { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+        .review-detail { font-size: 12px; color: var(--muted); }
+
+        @media (max-width: 768px) {
+            .reviews-section { padding: 50px 20px; }
+            .reviews-grid { grid-template-columns: 1fr; }
+        }
+
         /* ── SCROLLBAR ── */
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: var(--bg); }
@@ -904,6 +1005,7 @@
     <section class="hero" id="hero" style="min-height:100vh;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;text-align:left;padding:90px 60px 32px;max-width:1200px;margin:0 auto;width:100%;">
 
         <div class="hero-tag">Accompagnement • Places limitées</div>
+        <div class="hero-webapp-label">Crée & vends des WebApps à des entreprises — de A à Z</div>
         <h1 class="hero-title">
             De zéro <span class="accent">au premier</span> <span class="line-2">contrat signé.</span>
         </h1>
@@ -963,6 +1065,40 @@
             </div>
         </div>
 
+    </section>
+
+    <!-- AVIS CLIENTS -->
+    <section class="reviews-section">
+        <div class="reviews-inner">
+            <div class="reviews-label">Ils l'ont fait. Toi aussi tu peux.</div>
+            <div class="reviews-grid">
+
+                <div class="review-card">
+                    <div class="review-stat">3 000 €<span>/mois</span></div>
+                    <p class="review-text">Rémi est arrivé sans aucune connaissance technique ni réseau. En quelques mois dans La Sphère, il a maîtrisé le build, closé ses premiers clients et atteint <strong>3k€/mois</strong> de revenus récurrents.</p>
+                    <div class="review-author">
+                        <div class="review-avatar">R</div>
+                        <div>
+                            <div class="review-name">Rémi</div>
+                            <div class="review-detail">0 connaissance → 3 000 €/mois</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-stat">15 000 €<span> contractés</span></div>
+                    <p class="review-text">Quentin a appliqué la méthode closing dès la phase 2. En 4 mois, il a signé plusieurs contrats pour un total de <strong>plus de 15 000 €</strong> — tout en construisant son infrastructure en parallèle.</p>
+                    <div class="review-author">
+                        <div class="review-avatar">Q</div>
+                        <div>
+                            <div class="review-name">Quentin</div>
+                            <div class="review-detail">+15 000 € contractés en 4 mois</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </section>
 
     <!-- MODAL FORMULAIRE -->
