@@ -857,7 +857,7 @@
         /* ── REVIEWS ── */
         .reviews-section {
             border-top: 1px solid var(--border);
-            padding: 64px 60px;
+            padding: 64px 40px;
         }
 
         .reviews-inner {
@@ -875,14 +875,13 @@
         }
 
         .reviews-wrap {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 20px;
-            align-items: start;
+            display: flex;
+            gap: 60px;
+            align-items: center;
         }
 
         .reviews-left {
-            padding-right: 20px;
+            max-width: 380px;
             padding-top: 8px;
         }
 
@@ -904,21 +903,72 @@
             margin-bottom: 28px;
         }
 
-        .reviews-grid {
-            display: contents;
+        /* Carousel */
+        .reviews-carousel {
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+            overflow: visible;
+            margin-left: auto;
+            padding-right: 20px;
+            margin-right: 150px;
+        }
+
+        .carousel-stage {
+            position: relative;
+            width: 300px;
+            height: 620px;
+            overflow: visible;
         }
 
         .review-card {
+            position: absolute;
+            width: 300px;
+            left: 0;
+            top: 0;
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 20px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            transition: border-color 0.3s;
+            transform-origin: center center;
+            transition: transform 0.45s cubic-bezier(0.4,0,0.2,1), opacity 0.45s ease, box-shadow 0.45s ease;
+            will-change: transform, opacity;
         }
 
-        .review-card:hover { border-color: rgba(204,0,0,0.3); }
+        .review-card[data-pos="0"] {
+            transform: translateX(0) scale(1) rotate(0deg);
+            z-index: 3;
+            opacity: 1;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            cursor: default;
+        }
+
+        .review-card[data-pos="-1"] {
+            transform: translateX(-175px) scale(0.82) rotate(-8deg);
+            z-index: 2;
+            opacity: 0.55;
+            box-shadow: none;
+            cursor: pointer;
+        }
+
+        .review-card[data-pos="1"] {
+            transform: translateX(175px) scale(0.82) rotate(8deg);
+            z-index: 2;
+            opacity: 0.55;
+            box-shadow: none;
+            cursor: pointer;
+        }
+
+        .review-card[data-pos="hidden"] {
+            transform: scale(0.5);
+            opacity: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
 
         .review-video-wrap {
             width: 100%;
@@ -935,27 +985,6 @@
             border: none;
             display: block;
         }
-
-        .review-video-placeholder {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            color: var(--muted);
-        }
-
-        .review-video-placeholder .play-icon {
-            width: 52px; height: 52px;
-            background: var(--red-dim);
-            border: 1px solid rgba(204,0,0,0.3);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-        }
-
-        .review-video-placeholder span { font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
 
         .review-footer {
             padding: 20px 22px;
@@ -994,14 +1023,47 @@
             letter-spacing: -0.5px;
         }
 
+        .carousel-controls {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .carousel-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1.5px solid rgba(255,255,255,0.35);
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #fff;
+            transition: border-color 0.2s, background 0.2s, color 0.2s;
+            flex-shrink: 0;
+        }
+        .carousel-btn:hover { border-color: var(--red); background: var(--red); color: #fff; }
+
+        .carousel-dots { display: flex; gap: 7px; align-items: center; }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--border);
+            transition: background 0.25s, transform 0.25s;
+        }
+        .dot.active { background: var(--red); transform: scale(1.35); }
+
         @media (max-width: 900px) {
-            .reviews-wrap { grid-template-columns: 1fr 1fr; }
-            .reviews-left { grid-column: 1 / -1; padding-right: 0; }
+            .reviews-wrap { flex-direction: column; align-items: center; gap: 36px; }
+            .reviews-left { max-width: 100%; width: 100%; }
+            .reviews-carousel { width: 100%; align-items: center; }
         }
 
         @media (max-width: 600px) {
             .reviews-section { padding: 50px 20px; }
-            .reviews-wrap { grid-template-columns: 1fr; }
         }
 
         /* ── SCROLLBAR ── */
@@ -1135,64 +1197,102 @@
                 <!-- Texte gauche -->
                 <div class="reviews-left">
                     <h2>Des résultats<br><span>concrets.</span><br>Pas des promesses.</h2>
-                    <p>Rémi est passé de zéro connaissance à 3 000 €/mois. Quentin a contracté plus de 15 000 € en 4 mois. Deux parcours différents, une seule méthode.</p>
+                    <p>Rémi est passé de zéro connaissance à 3 000 €/mois. Quentin a contracté plus de 15 000 € en 4 mois. Elie génère maintenant 4 000 €/mois. Des parcours différents, une seule méthode.</p>
                     <button class="btn-red" onclick="openModal()" style="font-size:14px;padding:12px 24px;">
                         Je veux le même résultat
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </button>
                 </div>
 
-            <div class="reviews-grid">
+                <!-- Carousel -->
+                <div class="reviews-carousel">
+                    <div class="carousel-stage" id="carouselStage">
 
-                <!-- Rémi -->
-                <div class="review-card">
-                    <div class="review-video-wrap">
-                        <!-- Remplace par le lien Wistia de Rémi quand prêt -->
-                        <div class="review-video-placeholder">
-                            <div class="play-icon">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--red)"><path d="M8 5v14l11-7z"/></svg>
+                        <!-- Rémi -->
+                        <div class="review-card" data-pos="0">
+                            <div class="review-video-wrap">
+                                <iframe
+                                    src="https://fast.wistia.net/embed/iframe/7yw39v6tfm?videoFoam=true&autoPlay=false"
+                                    allowtransparency="true" frameborder="0" scrolling="no"
+                                    allowfullscreen mozallowfullscreen webkitallowfullscreen
+                                    style="width:100%;height:100%;position:absolute;top:0;left:0;"
+                                ></iframe>
                             </div>
-                            <span>Vidéo Rémi — bientôt</span>
-                        </div>
-                    </div>
-                    <div class="review-footer">
-                        <div class="review-author">
-                            <div class="review-avatar">R</div>
-                            <div>
-                                <div class="review-name">Rémi</div>
-                                <div class="review-detail">0 connaissance au départ</div>
-                            </div>
-                        </div>
-                        <div class="review-badge">3k€/mois</div>
-                    </div>
-                </div>
-
-                <!-- Quentin -->
-                <div class="review-card">
-                    <div class="review-video-wrap">
-                        <iframe
-                            src="https://fast.wistia.net/embed/iframe/uuq255pesz?videoFoam=true&autoPlay=false"
-                            allowtransparency="true"
-                            frameborder="0"
-                            scrolling="no"
-                            allow="autoplay; fullscreen"
-                            allowfullscreen>
-                        </iframe>
-                    </div>
-                    <div class="review-footer">
-                        <div class="review-author">
-                            <div class="review-avatar">Q</div>
-                            <div>
-                                <div class="review-name">Quentin</div>
-                                <div class="review-detail">En 4 mois</div>
+                            <div class="review-footer">
+                                <div class="review-author">
+                                    <div class="review-avatar">R</div>
+                                    <div>
+                                        <div class="review-name">Rémi</div>
+                                        <div class="review-detail">0 connaissance au départ</div>
+                                    </div>
+                                </div>
+                                <div class="review-badge">3k€/mois</div>
                             </div>
                         </div>
-                        <div class="review-badge">+15k€ contractés</div>
-                    </div>
-                </div>
 
-            </div>
-        </div>
+                        <!-- Quentin -->
+                        <div class="review-card" data-pos="1">
+                            <div class="review-video-wrap">
+                                <iframe
+                                    src="https://fast.wistia.net/embed/iframe/uuq255pesz?videoFoam=true&autoPlay=false"
+                                    allowtransparency="true" frameborder="0" scrolling="no"
+                                    allowfullscreen mozallowfullscreen webkitallowfullscreen
+                                    style="width:100%;height:100%;position:absolute;top:0;left:0;"
+                                ></iframe>
+                            </div>
+                            <div class="review-footer">
+                                <div class="review-author">
+                                    <div class="review-avatar">Q</div>
+                                    <div>
+                                        <div class="review-name">Quentin</div>
+                                        <div class="review-detail">En 4 mois</div>
+                                    </div>
+                                </div>
+                                <div class="review-badge">+15k€ contractés</div>
+                            </div>
+                        </div>
+
+                        <!-- Elie -->
+                        <div class="review-card" data-pos="-1">
+                            <div class="review-video-wrap">
+                                <iframe
+                                    src="https://fast.wistia.net/embed/iframe/pm52abgv00?videoFoam=true&autoPlay=false"
+                                    allowtransparency="true" frameborder="0" scrolling="no"
+                                    allowfullscreen mozallowfullscreen webkitallowfullscreen
+                                    style="width:100%;height:100%;position:absolute;top:0;left:0;"
+                                ></iframe>
+                            </div>
+                            <div class="review-footer">
+                                <div class="review-author">
+                                    <div class="review-avatar">E</div>
+                                    <div>
+                                        <div class="review-name">Elie</div>
+                                        <div class="review-detail">Résultat récurrent</div>
+                                    </div>
+                                </div>
+                                <div class="review-badge">4k€/mois</div>
+                            </div>
+                        </div>
+
+                    </div><!-- /carousel-stage -->
+
+                    <div class="carousel-controls">
+                        <button class="carousel-btn" id="carouselPrev" aria-label="Précédent">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+                        </button>
+                        <div class="carousel-dots" id="carouselDots">
+                            <span class="dot active"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
+                        <button class="carousel-btn" id="carouselNext" aria-label="Suivant">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+                        </button>
+                    </div>
+                </div><!-- /reviews-carousel -->
+
+            </div><!-- /reviews-wrap -->
+        </div><!-- /reviews-inner -->
     </section>
 
     <!-- MODAL FORMULAIRE -->
@@ -1495,6 +1595,50 @@
             setTimeout(() => { btn.style.transform = 'translateX(-4px)'; }, 160);
             setTimeout(() => { btn.style.transform = 'translateX(0)'; }, 240);
         }
+
+        // Carousel avis clients
+        (function() {
+            const cards = Array.from(document.querySelectorAll('.review-card'));
+            const dots = Array.from(document.querySelectorAll('#carouselDots .dot'));
+            const n = cards.length;
+            let current = 0;
+
+            function getPos(i) {
+                const diff = (i - current + n) % n;
+                if (diff === 0) return '0';
+                if (diff === 1) return '1';
+                if (diff === n - 1) return '-1';
+                return 'hidden';
+            }
+
+            function update() {
+                cards.forEach((card, i) => { card.dataset.pos = getPos(i); });
+                dots.forEach((dot, i) => { dot.classList.toggle('active', i === current); });
+            }
+
+            function next() { current = (current + 1) % n; update(); }
+            function prev() { current = (current - 1 + n) % n; update(); }
+
+            document.getElementById('carouselNext').addEventListener('click', next);
+            document.getElementById('carouselPrev').addEventListener('click', prev);
+
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    if (card.dataset.pos === '1') next();
+                    else if (card.dataset.pos === '-1') prev();
+                });
+            });
+
+            // Swipe tactile
+            let touchStartX = 0;
+            const stage = document.getElementById('carouselStage');
+            stage.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+            stage.addEventListener('touchend', e => {
+                const dx = e.changedTouches[0].clientX - touchStartX;
+                if (dx < -40) next();
+                else if (dx > 40) prev();
+            }, { passive: true });
+        })();
     </script>
 </body>
 </html>
