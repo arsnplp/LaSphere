@@ -970,6 +970,20 @@
             pointer-events: none;
         }
 
+        /* ── MATHIS card (filmed horizontally) ── */
+        /* Show landscape video sideways to fill portrait card */
+        .mathis-card .review-video-wrap iframe {
+            transform: rotate(90deg) translateY(55%) scale(1.78);
+            transform-origin: center center;
+        }
+
+        /* When active: rotate whole card to landscape → video net 0° = upright */
+        .mathis-card[data-pos="0"] {
+            transform: translateX(0) scale(1) rotate(-90deg) !important;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5) !important;
+        }
+
+
         .review-video-wrap {
             width: 100%;
             aspect-ratio: 9/16;
@@ -1252,6 +1266,28 @@
                             </div>
                         </div>
 
+                        <!-- Mathis -->
+                        <div class="review-card mathis-card" data-pos="hidden">
+                            <div class="review-video-wrap">
+                                <iframe
+                                    src="https://fast.wistia.net/embed/iframe/vu9vj0kpeh?videoFoam=true&autoPlay=false"
+                                    allowtransparency="true" frameborder="0" scrolling="no"
+                                    allowfullscreen mozallowfullscreen webkitallowfullscreen
+                                    style="width:100%;height:100%;position:absolute;top:0;left:0;"
+                                ></iframe>
+                            </div>
+                            <div class="review-footer">
+                                <div class="review-author">
+                                    <div class="review-avatar">M</div>
+                                    <div>
+                                        <div class="review-name">Mathis</div>
+                                        <div class="review-detail">Étudiant</div>
+                                    </div>
+                                </div>
+                                <div class="review-badge">1 contrat en 2 mois</div>
+                            </div>
+                        </div>
+
                         <!-- Elie -->
                         <div class="review-card" data-pos="-1">
                             <div class="review-video-wrap">
@@ -1282,6 +1318,7 @@
                         </button>
                         <div class="carousel-dots" id="carouselDots">
                             <span class="dot active"></span>
+                            <span class="dot"></span>
                             <span class="dot"></span>
                             <span class="dot"></span>
                         </div>
