@@ -24,7 +24,16 @@
         }
 
         html { scroll-behavior: smooth; }
-        body { font-family: var(--font); background: var(--bg); color: var(--text); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+        body {
+            font-family: var(--font);
+            background:
+                radial-gradient(ellipse 140% 55% at 50% -10%, rgba(160,0,0,0.13) 0%, transparent 55%),
+                radial-gradient(ellipse 80% 40% at 85% 110%, rgba(100,0,0,0.07) 0%, transparent 55%),
+                #080809;
+            color: var(--text);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
         a { text-decoration: none; color: inherit; }
         img { display: block; max-width: 100%; }
 
@@ -119,8 +128,8 @@
             font-size: 16px;
             color: var(--muted);
             line-height: 1.65;
-            max-width: 680px;
-            margin-bottom: 0;
+            max-width: 620px;
+            margin: 0 auto;
         }
 
         .hero-sub strong { color: var(--text); font-weight: 600; }
@@ -129,9 +138,10 @@
             width: 100%;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
+            flex-direction: column;
             margin-top: 24px;
-            gap: 20px;
+            gap: 16px;
             flex-wrap: wrap;
         }
 
@@ -352,11 +362,11 @@
         }
 
         .phase-card {
-            background: var(--bg-card);
+            background: linear-gradient(135deg, #1a1a1c 0%, #131315 100%);
             border: 1px solid var(--border);
             border-radius: 16px;
             padding: 32px;
-            transition: border-color 0.3s;
+            transition: border-color 0.3s, background 0.3s;
             position: relative;
             overflow: hidden;
         }
@@ -579,6 +589,7 @@
         .prog-section {
             padding: 100px 40px;
             border-top: 1px solid var(--border);
+            background: linear-gradient(180deg, rgba(180,0,0,0.05) 0%, transparent 50%);
         }
 
         .prog-inner {
@@ -598,15 +609,16 @@
         }
 
         .prog-card {
-            background: var(--bg-card);
+            background: linear-gradient(135deg, #1a1a1c 0%, #131315 100%);
             border: 1px solid var(--border);
             border-radius: 16px;
             padding: 28px 24px;
-            transition: border-color 0.3s;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
 
         .prog-card:hover {
             border-color: rgba(204,0,0,0.35);
+            box-shadow: 0 8px 32px rgba(180,0,0,0.1);
         }
 
         .prog-card-top {
@@ -792,24 +804,6 @@
             animation: neonPulse 2.8s ease-in-out infinite;
         }
 
-        .video-wrap::before,
-        .video-wrap::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            width: 55%;
-            height: 75%;
-            z-index: 10;
-            pointer-events: none;
-        }
-        .video-wrap::before {
-            left: 0;
-            background: radial-gradient(ellipse at bottom left, rgba(130,0,0,0.98) 0%, rgba(110,0,0,0.85) 25%, rgba(80,0,0,0.55) 50%, transparent 72%);
-        }
-        .video-wrap::after {
-            right: 0;
-            background: radial-gradient(ellipse at bottom right, rgba(130,0,0,0.98) 0%, rgba(110,0,0,0.85) 25%, rgba(80,0,0,0.55) 50%, transparent 72%);
-        }
 
         .video-wrap video {
             width: 100%; height: 100%;
@@ -895,6 +889,9 @@
         .reviews-section {
             border-top: 1px solid var(--border);
             padding: 64px 40px;
+            background:
+                radial-gradient(ellipse 100% 80% at 70% 50%, rgba(180,0,0,0.06) 0%, transparent 60%),
+                rgba(255,255,255,0.012);
         }
 
         .reviews-inner {
@@ -1174,7 +1171,7 @@
     </nav>
 
     <!-- HERO -->
-    <section class="hero" id="hero" style="min-height:100vh;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;text-align:left;padding:90px 60px 32px;max-width:1200px;margin:0 auto;width:100%;">
+    <section class="hero" id="hero" style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:90px 60px 32px;max-width:1200px;margin:0 auto;width:100%;">
 
         <div class="hero-tag">Accompagnement • Places limitées</div>
         <div class="hero-webapp-label">Crée & vends des WebApps à des entreprises — de A à Z</div>
