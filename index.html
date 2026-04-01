@@ -23,7 +23,7 @@
             --font-title: 'Poppins', sans-serif;
         }
 
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: smooth; overflow-x: hidden; }
         body {
             font-family: var(--font);
             background:
@@ -889,6 +889,7 @@
         .reviews-section {
             border-top: 1px solid var(--border);
             padding: 64px 40px;
+            overflow-x: clip;
             background:
                 radial-gradient(ellipse 100% 80% at 70% 50%, rgba(180,0,0,0.06) 0%, transparent 60%),
                 rgba(255,255,255,0.012);
