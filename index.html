@@ -765,6 +765,90 @@
             color: var(--muted-2);
         }
 
+        /* ── SUCCESS PAGE ── */
+        .success-main {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 32px;
+            line-height: 1.5;
+        }
+
+        .success-main strong { color: var(--red); }
+
+        .success-mail-block {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 22px 22px;
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        .success-mail-icon {
+            width: 52px; height: 52px;
+            background: var(--red-dim);
+            border: 1px solid rgba(204,0,0,0.2);
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--red);
+            flex-shrink: 0;
+        }
+
+        .success-mail-text {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .success-mail-text strong {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .success-mail-text span {
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.55;
+        }
+
+        .success-offer-block {
+            background: linear-gradient(135deg, rgba(204,0,0,0.1) 0%, rgba(204,0,0,0.04) 100%);
+            border: 1px solid rgba(204,0,0,0.25);
+            border-radius: 16px;
+            padding: 22px 22px;
+            text-align: left;
+        }
+
+        .success-offer-tag {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 12px;
+        }
+
+        .success-offer-block p {
+            font-size: 15px;
+            color: var(--muted);
+            line-height: 1.65;
+            margin-bottom: 10px;
+        }
+
+        .success-offer-block p strong { color: var(--text); }
+
+        .success-offer-sub {
+            font-size: 13px !important;
+            color: var(--muted-2) !important;
+            margin-bottom: 0 !important;
+        }
+
         /* ── SCROLLBAR ── */
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: var(--bg); }
@@ -1118,47 +1202,37 @@
             <!-- ── ÉCRAN SUCCESS ── -->
             <div class="screen" id="screen-success">
                 <div class="success-screen">
+
                     <div class="success-icon">🎉</div>
-                    <div class="success-badge">Tu es éligible</div>
+                    <div class="success-badge">Profil validé</div>
+
                     <h2>Félicitations,<br><span class="red">profil validé.</span></h2>
-                    <p>
-                        Ton plan personnalisé est en préparation.
-                        Réserve maintenant ton appel stratégique gratuit
-                        pour démarrer dans les <strong>48h</strong>.
+                    <p class="success-main">
+                        Tu es à <strong>un choix</strong> de changer de vie.
                     </p>
 
-                    <div class="success-social">
-                        <div class="success-proof-item">
-                            <div class="avatar">R</div>
-                            <div class="info">
-                                <strong>Rémi</strong>
-                                <span>0 connaissance au départ</span>
-                            </div>
-                            <div class="badge">3k€/mois</div>
+                    <div class="success-mail-block">
+                        <div class="success-mail-icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
                         </div>
-                        <div class="success-proof-item">
-                            <div class="avatar">Q</div>
-                            <div class="info">
-                                <strong>Quentin</strong>
-                                <span>En 4 mois</span>
-                            </div>
-                            <div class="badge">+15k€ contractés</div>
-                        </div>
-                        <div class="success-proof-item">
-                            <div class="avatar">E</div>
-                            <div class="info">
-                                <strong>Elie</strong>
-                                <span>Résultat récurrent</span>
-                            </div>
-                            <div class="badge">4k€/mois</div>
+                        <div class="success-mail-text">
+                            <strong>Check tes mails.</strong>
+                            <span>Je t'ai envoyé une roadmap complète pour commencer à te préparer à lancer ton agence.</span>
                         </div>
                     </div>
 
-                    <a href="#" class="btn-cal">
-                        Réserver mon appel maintenant
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                    </a>
-                    <p class="success-note">Places limitées · Appel gratuit · Sans engagement</p>
+                    <div class="success-offer-block">
+                        <div class="success-offer-tag">Offre exclusive</div>
+                        <p>
+                            Si tu finis de tout mettre en place <strong>avant que je te contacte</strong>,
+                            tu auras droit à une offre spéciale —
+                            <strong style="color:var(--red)">−50% sur l'accompagnement.</strong>
+                        </p>
+                        <p class="success-offer-sub">
+                            C'est ma façon de reconnaître les profils vraiment déterminés.
+                        </p>
+                    </div>
+
                 </div>
             </div>
 
