@@ -42,15 +42,14 @@
             position: fixed;
             top: 0; left: 0; right: 0;
             z-index: 100;
-            background: rgba(11,11,12,0.85);
+            background: rgba(11,11,12,0.88);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
-            padding: 14px 20px;
+            padding: 14px 24px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            gap: 16px;
+            gap: 18px;
         }
 
         .logo {
@@ -83,7 +82,7 @@
             font-weight: 600;
             color: var(--muted);
             flex-shrink: 0;
-            min-width: 36px;
+            min-width: 32px;
             text-align: right;
         }
 
@@ -91,33 +90,32 @@
         .quiz-wrapper {
             min-height: 100vh;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
-            padding: 80px 20px 40px;
+            padding: 90px 24px 60px;
         }
 
         .quiz-inner {
             width: 100%;
-            max-width: 560px;
-            position: relative;
+            max-width: 580px;
         }
 
         /* ── SCREENS ── */
         .screen {
             display: none;
-            animation: fadeSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            animation: fadeSlideIn 0.38s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
 
         .screen.active { display: block; }
 
         @keyframes fadeSlideIn {
-            from { opacity: 0; transform: translateY(18px); }
+            from { opacity: 0; transform: translateY(16px); }
             to   { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes fadeSlideOut {
             from { opacity: 1; transform: translateY(0); }
-            to   { opacity: 0; transform: translateY(-18px); }
+            to   { opacity: 0; transform: translateY(-14px); }
         }
 
         /* ── SCREEN 1 — HOOK ── */
@@ -152,56 +150,58 @@
 
         .hook-title {
             font-family: var(--font-title);
-            font-size: clamp(32px, 8vw, 52px);
+            font-size: clamp(34px, 6vw, 56px);
             font-weight: 800;
-            letter-spacing: -2px;
+            letter-spacing: -2.5px;
             line-height: 1.05;
-            margin-bottom: 16px;
+            margin-bottom: 18px;
         }
 
         .hook-title .red { color: var(--red); }
 
         .hook-sub {
-            font-size: 16px;
+            font-size: 17px;
             color: var(--muted);
-            line-height: 1.65;
-            margin-bottom: 10px;
+            line-height: 1.7;
+            margin-bottom: 8px;
+            max-width: 480px;
         }
 
+        .hook-sub strong { color: var(--text); }
+
         .hook-timer {
-            display: flex;
-            align-items: center;
-            gap: 8px;
             font-size: 13px;
             color: var(--muted-2);
             margin-bottom: 36px;
         }
 
-        .hook-timer span { color: var(--text); font-weight: 600; }
+        .hook-timer strong { color: var(--muted); }
 
         .hook-trust {
             display: flex;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 10px 20px;
             margin-bottom: 40px;
         }
 
-        .trust-pill {
-            display: flex;
-            align-items: center;
-            gap: 6px;
+        .trust-item {
             font-size: 13px;
             color: var(--muted);
+            display: flex;
+            align-items: center;
+            gap: 7px;
         }
 
-        .trust-pill::before {
+        .trust-item::before {
             content: '';
             width: 14px; height: 14px;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23cc0000' stroke-width='2.5'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E");
-            background-size: contain; background-repeat: no-repeat; flex-shrink: 0;
+            background-size: contain;
+            background-repeat: no-repeat;
+            flex-shrink: 0;
         }
 
-        /* ── BIG CTA BUTTON ── */
+        /* ── CTA BUTTON ── */
         .btn-cta {
             width: 100%;
             background: var(--red);
@@ -218,19 +218,17 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            box-shadow: 0 4px 24px rgba(204,0,0,0.35);
+            box-shadow: 0 4px 28px rgba(204,0,0,0.38);
             letter-spacing: -0.3px;
         }
 
         .btn-cta:hover {
             background: var(--red-light);
             transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(204,0,0,0.45);
+            box-shadow: 0 8px 36px rgba(204,0,0,0.48);
         }
 
         .btn-cta:active { transform: translateY(0); }
-
-        .btn-cta svg { flex-shrink: 0; }
 
         /* ── QUESTION SCREENS ── */
         .q-step-label {
@@ -239,23 +237,23 @@
             letter-spacing: 3px;
             text-transform: uppercase;
             color: var(--red);
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
 
         .q-title {
             font-family: var(--font-title);
-            font-size: clamp(22px, 6vw, 32px);
+            font-size: clamp(24px, 4.5vw, 36px);
             font-weight: 700;
-            letter-spacing: -1px;
+            letter-spacing: -1.2px;
             line-height: 1.2;
             margin-bottom: 8px;
         }
 
         .q-sub {
-            font-size: 14px;
+            font-size: 15px;
             color: var(--muted);
             margin-bottom: 32px;
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
         .q-options {
@@ -269,14 +267,12 @@
             display: flex;
             align-items: center;
             gap: 14px;
-            padding: 16px 18px;
+            padding: 16px 20px;
             background: rgba(255,255,255,0.03);
             border: 1.5px solid var(--border);
             border-radius: 14px;
             cursor: pointer;
-            font-size: 15px;
-            color: var(--muted);
-            transition: all 0.2s;
+            transition: all 0.18s;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
@@ -288,15 +284,22 @@
             border: 2px solid var(--muted-2);
             border-radius: 50%;
             flex-shrink: 0;
-            transition: all 0.2s;
+            transition: all 0.18s;
             display: flex; align-items: center; justify-content: center;
+        }
+
+        .q-option-text {
+            flex: 1;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--muted);
+            line-height: 1.4;
         }
 
         .q-option.selected {
             border-color: var(--red);
             background: var(--red-dim);
-            color: var(--text);
-            box-shadow: 0 0 0 1px rgba(204,0,0,0.2);
+            box-shadow: 0 0 0 1px rgba(204,0,0,0.18);
         }
 
         .q-option.selected .q-option-dot {
@@ -311,19 +314,16 @@
             border-radius: 50%;
         }
 
+        .q-option.selected .q-option-text { color: var(--text); }
+
         .q-option:hover:not(.selected) {
-            border-color: rgba(204,0,0,0.3);
-            color: var(--text);
+            border-color: rgba(204,0,0,0.28);
             background: rgba(255,255,255,0.05);
         }
 
-        .q-option-emoji {
-            font-size: 18px;
-            flex-shrink: 0;
-        }
+        .q-option:hover:not(.selected) .q-option-text { color: var(--text); }
 
-        .q-option-text { flex: 1; line-height: 1.4; }
-
+        /* ── NEXT BUTTON ── */
         .btn-next {
             width: 100%;
             background: var(--red);
@@ -341,7 +341,7 @@
             justify-content: center;
             gap: 8px;
             box-shadow: 0 4px 24px rgba(204,0,0,0.35);
-            opacity: 0.5;
+            opacity: 0.45;
             pointer-events: none;
         }
 
@@ -361,41 +361,101 @@
         /* ── SCREEN 5 — SOCIAL PROOF ── */
         .proof-header {
             text-align: center;
-            margin-bottom: 28px;
+            margin-bottom: 36px;
         }
+
+        .proof-header .q-step-label { text-align: center; }
 
         .proof-header h2 {
             font-family: var(--font-title);
-            font-size: clamp(24px, 6vw, 34px);
+            font-size: clamp(26px, 5.5vw, 38px);
             font-weight: 700;
-            letter-spacing: -1px;
-            line-height: 1.2;
-            margin-bottom: 8px;
+            letter-spacing: -1.5px;
+            line-height: 1.15;
+            margin-bottom: 10px;
         }
 
         .proof-header h2 .red { color: var(--red); }
 
         .proof-header p {
-            font-size: 14px;
+            font-size: 15px;
             color: var(--muted);
             line-height: 1.6;
         }
 
-        .proof-videos {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 28px;
+        /* ── CAROUSEL ── */
+        .proof-carousel-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 28px;
+            margin-bottom: 36px;
         }
 
-        .proof-video-card {
+        .carousel-stage {
+            position: relative;
+            width: 240px;
+            height: 500px;
+            overflow: visible;
+        }
+
+        .review-card {
+            position: absolute;
+            width: 240px;
+            left: 0; top: 0;
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 14px;
+            border-radius: 18px;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transform-origin: center center;
+            transition: transform 0.42s cubic-bezier(0.4,0,0.2,1), opacity 0.42s ease, box-shadow 0.42s ease;
+            will-change: transform, opacity;
         }
 
-        .proof-video-wrap {
+        .review-card[data-pos="0"] {
+            transform: translateX(0) scale(1) rotate(0deg);
+            z-index: 3;
+            opacity: 1;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+            cursor: default;
+        }
+
+        .review-card[data-pos="-1"] {
+            transform: translateX(-155px) scale(0.8) rotate(-7deg);
+            z-index: 2;
+            opacity: 0.5;
+            box-shadow: none;
+            cursor: pointer;
+        }
+
+        .review-card[data-pos="1"] {
+            transform: translateX(155px) scale(0.8) rotate(7deg);
+            z-index: 2;
+            opacity: 0.5;
+            box-shadow: none;
+            cursor: pointer;
+        }
+
+        .review-card[data-pos="hidden"] {
+            transform: scale(0.5);
+            opacity: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .mathis-card .review-video-wrap iframe {
+            transform: rotate(90deg) translateY(55%) scale(1.78);
+            transform-origin: center center;
+        }
+
+        .mathis-card[data-pos="0"] {
+            transform: translateX(0) scale(1) rotate(-90deg) !important;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.55) !important;
+        }
+
+        .review-video-wrap {
             width: 100%;
             aspect-ratio: 9/16;
             background: #0d0d0d;
@@ -403,37 +463,83 @@
             overflow: hidden;
         }
 
-        .proof-video-wrap iframe {
+        .review-video-wrap iframe,
+        .review-video-wrap video {
             width: 100%; height: 100%;
             border: none; display: block;
             position: absolute; top: 0; left: 0;
         }
 
-        .proof-video-footer {
-            padding: 12px 14px;
+        .review-footer {
+            padding: 16px 18px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 10px;
         }
 
-        .proof-avatar {
-            width: 28px; height: 28px;
+        .review-author {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .review-avatar {
+            width: 32px; height: 32px;
             background: var(--red-dim);
             border: 1px solid rgba(204,0,0,0.25);
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            font-weight: 700; font-size: 11px;
+            font-weight: 700; font-size: 13px;
             color: var(--red);
             flex-shrink: 0;
-            margin-right: 8px;
         }
 
-        .proof-name { font-size: 13px; font-weight: 600; }
-        .proof-result { font-size: 12px; font-weight: 700; color: var(--red); }
+        .review-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+        .review-detail { font-size: 11px; color: var(--muted); }
 
-        /* ── SCREEN 8 — CONTACT ── */
+        .review-badge {
+            font-family: var(--font-title);
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--red);
+            white-space: nowrap;
+        }
+
+        .carousel-controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .carousel-btn {
+            background: rgba(255,255,255,0.08);
+            border: 1.5px solid rgba(255,255,255,0.2);
+            border-radius: 50%;
+            width: 42px; height: 42px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            color: #fff;
+            transition: border-color 0.2s, background 0.2s;
+            flex-shrink: 0;
+        }
+
+        .carousel-btn:hover { border-color: var(--red); background: var(--red); }
+
+        .carousel-dots { display: flex; gap: 7px; align-items: center; }
+
+        .dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--border);
+            transition: background 0.25s, transform 0.25s;
+        }
+
+        .dot.active { background: var(--red); transform: scale(1.4); }
+
+        /* ── SCREEN 6 — ÉTAT D'ESPRIT ── */
+        /* ── SCREEN 7 — CONTACT ── */
         .contact-header {
-            text-align: center;
             margin-bottom: 32px;
         }
 
@@ -442,7 +548,7 @@
             align-items: center;
             gap: 6px;
             background: rgba(0,180,60,0.1);
-            border: 1px solid rgba(0,180,60,0.25);
+            border: 1px solid rgba(0,180,60,0.22);
             padding: 5px 14px;
             border-radius: 100px;
             font-size: 12px;
@@ -451,47 +557,43 @@
             margin-bottom: 20px;
         }
 
-        .contact-badge::before {
-            content: '🔒';
-            font-size: 12px;
-        }
-
         .contact-header h2 {
             font-family: var(--font-title);
-            font-size: clamp(22px, 6vw, 30px);
+            font-size: clamp(24px, 5vw, 34px);
             font-weight: 700;
-            letter-spacing: -1px;
+            letter-spacing: -1.2px;
             line-height: 1.2;
             margin-bottom: 8px;
         }
 
         .contact-header p {
-            font-size: 14px;
+            font-size: 15px;
             color: var(--muted);
+            line-height: 1.6;
         }
 
         .fields-stack {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
             margin-bottom: 28px;
         }
 
-        .field-wrap { display: flex; flex-direction: column; gap: 6px; }
+        .field-wrap { display: flex; flex-direction: column; gap: 7px; }
 
         .field-wrap label {
             font-size: 12px;
             font-weight: 600;
             color: var(--muted);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.6px;
         }
 
         .field-wrap input {
             background: rgba(255,255,255,0.04);
             border: 1.5px solid var(--border);
             border-radius: 12px;
-            padding: 14px 16px;
+            padding: 15px 16px;
             font-size: 15px;
             color: var(--text);
             font-family: var(--font);
@@ -504,7 +606,7 @@
 
         .field-wrap input:focus {
             border-color: var(--red);
-            box-shadow: 0 0 0 3px rgba(204,0,0,0.12);
+            box-shadow: 0 0 0 3px rgba(204,0,0,0.1);
         }
 
         .contact-microcopy {
@@ -512,7 +614,7 @@
             font-size: 12px;
             color: var(--muted-2);
             margin-top: 14px;
-            line-height: 1.6;
+            line-height: 1.7;
         }
 
         .contact-microcopy strong { color: var(--muted); }
@@ -520,7 +622,7 @@
         /* ── SCREEN SUCCESS ── */
         .success-screen {
             text-align: center;
-            padding: 20px 0;
+            padding: 10px 0 20px;
         }
 
         .success-icon {
@@ -555,18 +657,18 @@
 
         .success-screen h2 {
             font-family: var(--font-title);
-            font-size: clamp(28px, 7vw, 40px);
+            font-size: clamp(28px, 6vw, 42px);
             font-weight: 800;
-            letter-spacing: -1.5px;
+            letter-spacing: -1.8px;
             margin-bottom: 12px;
         }
 
         .success-screen h2 .red { color: var(--red); }
 
-        .success-screen p {
+        .success-screen > p {
             font-size: 15px;
             color: var(--muted);
-            line-height: 1.65;
+            line-height: 1.7;
             max-width: 440px;
             margin: 0 auto 32px;
         }
@@ -587,26 +689,33 @@
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 12px;
-            font-size: 14px;
         }
 
         .success-proof-item .avatar {
-            width: 32px; height: 32px;
+            width: 34px; height: 34px;
             background: var(--red-dim);
             border: 1px solid rgba(204,0,0,0.25);
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            font-weight: 700; font-size: 12px; color: var(--red);
+            font-weight: 700; font-size: 13px; color: var(--red);
             flex-shrink: 0;
         }
 
-        .success-proof-item .info strong { display: block; font-size: 13px; margin-bottom: 2px; }
+        .success-proof-item .info strong {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
         .success-proof-item .info span { font-size: 12px; color: var(--muted); }
+
         .success-proof-item .badge {
             margin-left: auto;
             font-size: 13px;
             font-weight: 700;
             color: var(--red);
+            white-space: nowrap;
         }
 
         .btn-cal {
@@ -625,14 +734,14 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            box-shadow: 0 4px 24px rgba(204,0,0,0.35);
+            box-shadow: 0 4px 28px rgba(204,0,0,0.38);
             text-decoration: none;
         }
 
         .btn-cal:hover {
             background: var(--red-light);
             transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(204,0,0,0.45);
+            box-shadow: 0 8px 36px rgba(204,0,0,0.48);
         }
 
         .success-note {
@@ -642,21 +751,18 @@
         }
 
         /* ── MICRO COPY ── */
-        .micro-copy {
+        .hook-micro {
             display: flex;
             flex-wrap: wrap;
-            gap: 16px;
-            margin-top: 20px;
-            padding-top: 20px;
+            gap: 14px;
+            margin-top: 22px;
+            padding-top: 22px;
             border-top: 1px solid var(--border);
         }
 
         .micro-item {
             font-size: 12px;
             color: var(--muted-2);
-            display: flex;
-            align-items: center;
-            gap: 5px;
         }
 
         /* ── SCROLLBAR ── */
@@ -665,9 +771,16 @@
         ::-webkit-scrollbar-thumb { background: #2a2a2e; border-radius: 3px; }
 
         /* ── RESPONSIVE ── */
+        @media (min-width: 640px) {
+            .carousel-stage { width: 280px; height: 580px; }
+            .review-card { width: 280px; }
+            .review-card[data-pos="-1"] { transform: translateX(-175px) scale(0.8) rotate(-7deg); }
+            .review-card[data-pos="1"]  { transform: translateX(175px) scale(0.8) rotate(7deg); }
+        }
+
         @media (max-width: 480px) {
-            .proof-videos { grid-template-columns: 1fr; }
-            .hook-title { letter-spacing: -1.5px; }
+            .quiz-wrapper { padding: 78px 16px 50px; }
+            .hook-title { letter-spacing: -1.8px; }
         }
     </style>
 </head>
@@ -690,57 +803,51 @@
             <div class="screen active" id="screen-1">
                 <div class="hook-badge">Places limitées</div>
                 <h1 class="hook-title">
-                    Prêt à lancer (ou scaler)<br>ton <span class="red">agence IA ?</span>
+                    Prêt à lancer<br>(ou scaler) ton<br><span class="red">agence IA ?</span>
                 </h1>
                 <p class="hook-sub">
-                    Réponds à <strong>5 questions</strong> — 30 secondes — pour voir si tu es éligible à l'accompagnement.
+                    Réponds à <strong>4 questions</strong> pour voir si tu es éligible à l'accompagnement.
                 </p>
-                <div class="hook-timer">
-                    ⏱️ &nbsp;<span>30 secondes</span>&nbsp;· Sans engagement · 100% gratuit
-                </div>
+                <div class="hook-timer">⏱ 30 secondes &nbsp;·&nbsp; Sans engagement &nbsp;·&nbsp; 100% gratuit</div>
                 <div class="hook-trust">
-                    <div class="trust-pill">Résultats en 30–60 jours</div>
-                    <div class="trust-pill">Pas pour tout le monde</div>
-                    <div class="trust-pill">Méthode éprouvée</div>
+                    <div class="trust-item">Résultats en 30–60 jours</div>
+                    <div class="trust-item">Méthode éprouvée</div>
+                    <div class="trust-item">Sélection rigoureuse</div>
                 </div>
                 <button class="btn-cta" onclick="goTo(2)">
                     Commencer
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </button>
-                <div class="micro-copy">
-                    <div class="micro-item">🔥 100% des personnes accompagnées ont eu des résultats</div>
-                    <div class="micro-item">⚠️ Pas pour tout le monde — on sélectionne</div>
+                <div class="hook-micro">
+                    <span class="micro-item">100% des personnes accompagnées ont eu des résultats</span>
+                    <span class="micro-item">Pas pour tout le monde — on sélectionne</span>
                 </div>
             </div>
 
             <!-- ── ÉCRAN 2 : SITUATION ── -->
             <div class="screen" id="screen-2">
-                <div class="q-step-label">Question 1 / 5</div>
+                <div class="q-step-label">Question 1 / 4</div>
                 <h2 class="q-title">Où en es-tu aujourd'hui ?</h2>
                 <p class="q-sub">Choisis la situation qui te correspond le mieux.</p>
                 <div class="q-options" data-group="q1">
                     <label class="q-option" onclick="selectOption(this, 'q1')">
                         <input type="radio" name="q1" value="zero">
                         <span class="q-option-dot"></span>
-                        <span class="q-option-emoji">🌱</span>
                         <span class="q-option-text">Je pars de zéro</span>
                     </label>
                     <label class="q-option" onclick="selectOption(this, 'q1')">
                         <input type="radio" name="q1" value="idee">
                         <span class="q-option-dot"></span>
-                        <span class="q-option-emoji">💡</span>
                         <span class="q-option-text">J'ai une idée mais je bloque</span>
                     </label>
                     <label class="q-option" onclick="selectOption(this, 'q1')">
                         <input type="radio" name="q1" value="galere">
                         <span class="q-option-dot"></span>
-                        <span class="q-option-emoji">⚡</span>
                         <span class="q-option-text">J'ai déjà commencé mais je galère</span>
                     </label>
                     <label class="q-option" onclick="selectOption(this, 'q1')">
                         <input type="radio" name="q1" value="scale">
                         <span class="q-option-dot"></span>
-                        <span class="q-option-emoji">🚀</span>
                         <span class="q-option-text">Je fais déjà du CA mais je veux scaler</span>
                     </label>
                 </div>
@@ -752,32 +859,28 @@
 
             <!-- ── ÉCRAN 3 : PROJECTION ── -->
             <div class="screen" id="screen-3">
-                <div class="q-step-label">Question 2 / 5</div>
+                <div class="q-step-label">Question 2 / 4</div>
                 <h2 class="q-title">Où veux-tu être dans <span style="color:var(--red)">3 mois</span> ?</h2>
                 <p class="q-sub">Visualise ton objectif — c'est ça qui crée la motivation.</p>
                 <div class="q-options" data-group="q2">
                     <label class="q-option" onclick="selectOption(this, 'q2')">
                         <input type="radio" name="q2" value="premiers-clients">
                         <span class="q-option-dot"></span>
-                        <span class="q-option-emoji">🤝</span>
                         <span class="q-option-text">Signer mes premiers clients</span>
                     </label>
                     <label class="q-option" onclick="selectOption(this, 'q2')">
                         <input type="radio" name="q2" value="2k-5k">
                         <span class="q-option-dot"></span>
-                        <span class="q-option-emoji">💶</span>
                         <span class="q-option-text">Générer 2k–5k€/mois</span>
                     </label>
                     <label class="q-option" onclick="selectOption(this, 'q2')">
                         <input type="radio" name="q2" value="5k-10k">
                         <span class="q-option-dot"></span>
-                        <span class="q-option-emoji">📈</span>
                         <span class="q-option-text">Passer à 5k–10k€/mois</span>
                     </label>
                     <label class="q-option" onclick="selectOption(this, 'q2')">
                         <input type="radio" name="q2" value="10k+">
                         <span class="q-option-dot"></span>
-                        <span class="q-option-emoji">🔥</span>
                         <span class="q-option-text">Dépasser 10k€/mois</span>
                     </label>
                 </div>
@@ -789,32 +892,28 @@
 
             <!-- ── ÉCRAN 4 : DOULEUR ── -->
             <div class="screen" id="screen-4">
-                <div class="q-step-label">Question 3 / 5</div>
+                <div class="q-step-label">Question 3 / 4</div>
                 <h2 class="q-title">Qu'est-ce qui te <span style="color:var(--red)">bloque</span> le plus ?</h2>
-                <p class="q-sub">Sois honnête — c'est ce qui nous permet de t'aider vraiment.</p>
+                <p class="q-sub">Sois honnête — c'est ce qui nous permet de vraiment t'aider.</p>
                 <div class="q-options" data-group="q3">
                     <label class="q-option" onclick="selectOption(this, 'q3')">
                         <input type="radio" name="q3" value="quoi-vendre">
                         <span class="q-option-dot"></span>
-                        <span class="q-option-emoji">🎯</span>
                         <span class="q-option-text">Je ne sais pas quoi vendre</span>
                     </label>
                     <label class="q-option" onclick="selectOption(this, 'q3')">
                         <input type="radio" name="q3" value="trouver-clients">
                         <span class="q-option-dot"></span>
-                        <span class="q-option-emoji">🔍</span>
                         <span class="q-option-text">Je ne trouve pas de clients</span>
                     </label>
                     <label class="q-option" onclick="selectOption(this, 'q3')">
                         <input type="radio" name="q3" value="methode">
                         <span class="q-option-dot"></span>
-                        <span class="q-option-emoji">🗺️</span>
                         <span class="q-option-text">Je manque de méthode</span>
                     </label>
                     <label class="q-option" onclick="selectOption(this, 'q3')">
                         <input type="radio" name="q3" value="discipline">
                         <span class="q-option-dot"></span>
-                        <span class="q-option-emoji">⏳</span>
                         <span class="q-option-text">Je procrastine / manque de discipline</span>
                     </label>
                 </div>
@@ -827,42 +926,125 @@
             <!-- ── ÉCRAN 5 : PREUVE SOCIALE ── -->
             <div class="screen" id="screen-5">
                 <div class="proof-header">
-                    <div class="q-step-label" style="text-align:center">Ils étaient à ta place 👇</div>
+                    <div class="q-step-label">Ils étaient exactement à ta place</div>
                     <h2>Des résultats <span class="red">concrets.</span><br>Pas des promesses.</h2>
-                    <p style="margin-top:10px">Rémi, Quentin, Elie — parcours différents, une seule méthode.</p>
+                    <p style="margin-top:10px">Rémi, Quentin, Mathis, Elie, Rayan — parcours différents, une seule méthode.</p>
                 </div>
 
-                <div class="proof-videos">
-                    <!-- Rémi -->
-                    <div class="proof-video-card">
-                        <div class="proof-video-wrap">
-                            <iframe
-                                src="https://fast.wistia.net/embed/iframe/7yw39v6tfm?videoFoam=true&autoPlay=false"
-                                allowtransparency="true" frameborder="0" scrolling="no"
-                                allowfullscreen mozallowfullscreen webkitallowfullscreen>
-                            </iframe>
-                        </div>
-                        <div class="proof-video-footer">
-                            <div class="proof-avatar">R</div>
-                            <div class="proof-name">Rémi</div>
-                            <div class="proof-result">3k€/mois</div>
-                        </div>
-                    </div>
+                <div class="proof-carousel-wrap">
+                    <div class="carousel-stage" id="proofCarousel">
 
-                    <!-- Elie -->
-                    <div class="proof-video-card">
-                        <div class="proof-video-wrap">
-                            <iframe
-                                src="https://fast.wistia.net/embed/iframe/pm52abgv00?videoFoam=true&autoPlay=false"
-                                allowtransparency="true" frameborder="0" scrolling="no"
-                                allowfullscreen mozallowfullscreen webkitallowfullscreen>
-                            </iframe>
+                        <!-- Rémi -->
+                        <div class="review-card" data-pos="0">
+                            <div class="review-video-wrap">
+                                <iframe src="https://fast.wistia.net/embed/iframe/7yw39v6tfm?videoFoam=true&autoPlay=false"
+                                    allowtransparency="true" frameborder="0" scrolling="no"
+                                    allowfullscreen mozallowfullscreen webkitallowfullscreen></iframe>
+                            </div>
+                            <div class="review-footer">
+                                <div class="review-author">
+                                    <div class="review-avatar">R</div>
+                                    <div>
+                                        <div class="review-name">Rémi</div>
+                                        <div class="review-detail">0 connaissance au départ</div>
+                                    </div>
+                                </div>
+                                <div class="review-badge">3k€/mois</div>
+                            </div>
                         </div>
-                        <div class="proof-video-footer">
-                            <div class="proof-avatar">E</div>
-                            <div class="proof-name">Elie</div>
-                            <div class="proof-result">4k€/mois</div>
+
+                        <!-- Quentin -->
+                        <div class="review-card" data-pos="1">
+                            <div class="review-video-wrap">
+                                <iframe src="https://fast.wistia.net/embed/iframe/uuq255pesz?videoFoam=true&autoPlay=false"
+                                    allowtransparency="true" frameborder="0" scrolling="no"
+                                    allowfullscreen mozallowfullscreen webkitallowfullscreen></iframe>
+                            </div>
+                            <div class="review-footer">
+                                <div class="review-author">
+                                    <div class="review-avatar">Q</div>
+                                    <div>
+                                        <div class="review-name">Quentin</div>
+                                        <div class="review-detail">En 4 mois</div>
+                                    </div>
+                                </div>
+                                <div class="review-badge">+15k€ contractés</div>
+                            </div>
                         </div>
+
+                        <!-- Mathis -->
+                        <div class="review-card mathis-card" data-pos="hidden">
+                            <div class="review-video-wrap">
+                                <iframe src="https://fast.wistia.net/embed/iframe/vu9vj0kpeh?videoFoam=true&autoPlay=false"
+                                    allowtransparency="true" frameborder="0" scrolling="no"
+                                    allowfullscreen mozallowfullscreen webkitallowfullscreen></iframe>
+                            </div>
+                            <div class="review-footer">
+                                <div class="review-author">
+                                    <div class="review-avatar">M</div>
+                                    <div>
+                                        <div class="review-name">Mathis</div>
+                                        <div class="review-detail">Étudiant</div>
+                                    </div>
+                                </div>
+                                <div class="review-badge">1 contrat en 2 mois</div>
+                            </div>
+                        </div>
+
+                        <!-- Elie -->
+                        <div class="review-card" data-pos="-1">
+                            <div class="review-video-wrap">
+                                <iframe src="https://fast.wistia.net/embed/iframe/pm52abgv00?videoFoam=true&autoPlay=false"
+                                    allowtransparency="true" frameborder="0" scrolling="no"
+                                    allowfullscreen mozallowfullscreen webkitallowfullscreen></iframe>
+                            </div>
+                            <div class="review-footer">
+                                <div class="review-author">
+                                    <div class="review-avatar">E</div>
+                                    <div>
+                                        <div class="review-name">Elie</div>
+                                        <div class="review-detail">Résultat récurrent</div>
+                                    </div>
+                                </div>
+                                <div class="review-badge">4k€/mois</div>
+                            </div>
+                        </div>
+
+                        <!-- Rayan -->
+                        <div class="review-card" data-pos="hidden">
+                            <div class="review-video-wrap">
+                                <iframe src="https://fast.wistia.net/embed/iframe/fkq5k9ua9w?videoFoam=true&autoPlay=false"
+                                    allowtransparency="true" frameborder="0" scrolling="no"
+                                    allowfullscreen mozallowfullscreen webkitallowfullscreen></iframe>
+                            </div>
+                            <div class="review-footer">
+                                <div class="review-author">
+                                    <div class="review-avatar">R</div>
+                                    <div>
+                                        <div class="review-name">Rayan</div>
+                                        <div class="review-detail">Stratégie efficace</div>
+                                    </div>
+                                </div>
+                                <div class="review-badge">Gain de temps</div>
+                            </div>
+                        </div>
+
+                    </div><!-- /carousel-stage -->
+
+                    <div class="carousel-controls">
+                        <button class="carousel-btn" id="proofPrev" aria-label="Précédent">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+                        </button>
+                        <div class="carousel-dots" id="proofDots">
+                            <span class="dot active"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
+                        <button class="carousel-btn" id="proofNext" aria-label="Suivant">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+                        </button>
                     </div>
                 </div>
 
@@ -872,80 +1054,40 @@
                 </button>
             </div>
 
-            <!-- ── ÉCRAN 6 : QUALIFICATION FINANCIÈRE ── -->
+            <!-- ── ÉCRAN 6 : ÉTAT D'ESPRIT ── -->
             <div class="screen" id="screen-6">
-                <div class="q-step-label">Question 4 / 5</div>
-                <h2 class="q-title">Combien veux-tu <span style="color:var(--red)">générer</span> par mois ?</h2>
-                <p class="q-sub">Cela nous aide à te proposer la meilleure stratégie.</p>
+                <div class="q-step-label">Question 4 / 4</div>
+                <h2 class="q-title">Quel est ton <span style="color:var(--red)">état d'esprit</span> aujourd'hui ?</h2>
+                <p class="q-sub">On sélectionne seulement les profils alignés.</p>
                 <div class="q-options" data-group="q4">
                     <label class="q-option" onclick="selectOption(this, 'q4')">
-                        <input type="radio" name="q4" value="1k-2k">
+                        <input type="radio" name="q4" value="pret">
                         <span class="q-option-dot"></span>
-                        <span class="q-option-emoji">💰</span>
-                        <span class="q-option-text">1k–2k€/mois</span>
-                    </label>
-                    <label class="q-option" onclick="selectOption(this, 'q4')">
-                        <input type="radio" name="q4" value="2k-5k">
-                        <span class="q-option-dot"></span>
-                        <span class="q-option-emoji">💰💰</span>
-                        <span class="q-option-text">2k–5k€/mois</span>
-                    </label>
-                    <label class="q-option" onclick="selectOption(this, 'q4')">
-                        <input type="radio" name="q4" value="5k-10k">
-                        <span class="q-option-dot"></span>
-                        <span class="q-option-emoji">🚀</span>
-                        <span class="q-option-text">5k–10k€/mois</span>
-                    </label>
-                    <label class="q-option" onclick="selectOption(this, 'q4')">
-                        <input type="radio" name="q4" value="10k+">
-                        <span class="q-option-dot"></span>
-                        <span class="q-option-emoji">🔥</span>
-                        <span class="q-option-text">10k€+/mois</span>
-                    </label>
-                </div>
-                <button class="btn-next" id="btn-q4" onclick="goTo(7)">
-                    Continuer
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </button>
-            </div>
-
-            <!-- ── ÉCRAN 7 : ÉTAT D'ESPRIT ── -->
-            <div class="screen" id="screen-7">
-                <div class="q-step-label">Question 5 / 5</div>
-                <h2 class="q-title">Quel est ton <span style="color:var(--red)">état d'esprit</span> aujourd'hui ?</h2>
-                <p class="q-sub">Sois honnête — on ne sélectionne que des profils alignés.</p>
-                <div class="q-options" data-group="q5">
-                    <label class="q-option" onclick="selectOption(this, 'q5')">
-                        <input type="radio" name="q5" value="pret">
-                        <span class="q-option-dot"></span>
-                        <span class="q-option-emoji">✅</span>
                         <span class="q-option-text">Je suis prêt à investir pour réussir rapidement</span>
                     </label>
-                    <label class="q-option" onclick="selectOption(this, 'q5')">
-                        <input type="radio" name="q5" value="sur">
+                    <label class="q-option" onclick="selectOption(this, 'q4')">
+                        <input type="radio" name="q4" value="sur">
                         <span class="q-option-dot"></span>
-                        <span class="q-option-emoji">🤔</span>
                         <span class="q-option-text">Je peux investir mais je veux être sûr à 100%</span>
                     </label>
-                    <label class="q-option" onclick="selectOption(this, 'q5')">
-                        <input type="radio" name="q5" value="pas-pret">
+                    <label class="q-option" onclick="selectOption(this, 'q4')">
+                        <input type="radio" name="q4" value="pas-pret">
                         <span class="q-option-dot"></span>
-                        <span class="q-option-emoji">⏸️</span>
                         <span class="q-option-text">Je ne suis pas encore prêt à investir</span>
                     </label>
                 </div>
-                <button class="btn-next" id="btn-q5" onclick="goTo(8)">
+                <button class="btn-next" id="btn-q4" onclick="goTo(7)">
                     Voir si je suis éligible
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </button>
             </div>
 
-            <!-- ── ÉCRAN 8 : CONTACT ── -->
-            <div class="screen" id="screen-8">
+            <!-- ── ÉCRAN 7 : CONTACT ── -->
+            <div class="screen" id="screen-7">
                 <div class="contact-header">
                     <div class="contact-badge">Dernière étape</div>
                     <h2>On t'envoie ton<br><span style="color:var(--red)">plan personnalisé</span></h2>
-                    <p style="margin-top:10px">On sélectionne seulement les profils sérieux.</p>
+                    <p>On sélectionne seulement les profils sérieux.</p>
                 </div>
 
                 <div class="fields-stack">
@@ -968,8 +1110,8 @@
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </button>
                 <p class="contact-microcopy">
-                    <strong>Aucun spam.</strong> Tes données restent confidentielles.
-                    <br>On te recontacte sous 24h.
+                    <strong>Aucun spam.</strong> Tes données restent confidentielles.<br>
+                    On te recontacte sous 24h.
                 </p>
             </div>
 
@@ -977,7 +1119,7 @@
             <div class="screen" id="screen-success">
                 <div class="success-screen">
                     <div class="success-icon">🎉</div>
-                    <div class="success-badge">Tu es éligible !</div>
+                    <div class="success-badge">Tu es éligible</div>
                     <h2>Félicitations,<br><span class="red">profil validé.</span></h2>
                     <p>
                         Ton plan personnalisé est en préparation.
@@ -1012,11 +1154,11 @@
                         </div>
                     </div>
 
-                    <a href="#" class="btn-cal" id="cal-link">
+                    <a href="#" class="btn-cal">
                         Réserver mon appel maintenant
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </a>
-                    <p class="success-note">⏳ Places limitées — appel gratuit, sans engagement</p>
+                    <p class="success-note">Places limitées · Appel gratuit · Sans engagement</p>
                 </div>
             </div>
 
@@ -1027,20 +1169,7 @@
         const SUPABASE_URL  = 'https://nrynnpnsmtfcossqommp.supabase.co';
         const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5yeW5ucG5zbXRmY29zc3FvbW1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc5MDkwNjIsImV4cCI6MjA4MzQ4NTA2Mn0.bDNlJPU3wPrzInzwvWtDAvLWYrkYNoQZVv2TiSTtcvo';
 
-        // Screen config: screen number → progress percentage
-        const SCREEN_PROGRESS = {
-            1: 0,
-            2: 20,
-            3: 40,
-            4: 55,
-            5: 65,
-            6: 75,
-            7: 87,
-            8: 95,
-            'success': 100
-        };
-
-        let currentScreen = 1;
+        const SCREEN_PROGRESS = { 1:0, 2:25, 3:50, 4:65, 5:72, 6:85, 7:95, 'success':100 };
 
         function setProgress(val) {
             document.getElementById('progressFill').style.width = val + '%';
@@ -1049,45 +1178,39 @@
 
         function goTo(n) {
             const current = document.querySelector('.screen.active');
-            if (current) {
-                current.style.animation = 'fadeSlideOut 0.25s ease forwards';
-                setTimeout(() => {
-                    current.classList.remove('active');
-                    current.style.animation = '';
-                    const next = document.getElementById('screen-' + n);
-                    if (next) {
-                        next.classList.add('active');
-                        currentScreen = n;
-                        const prog = SCREEN_PROGRESS[n] ?? 0;
-                        setProgress(prog);
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }
-                }, 250);
-            }
+            if (!current) return;
+            current.style.animation = 'fadeSlideOut 0.24s ease forwards';
+            setTimeout(() => {
+                current.classList.remove('active');
+                current.style.animation = '';
+                const next = document.getElementById('screen-' + n);
+                if (next) {
+                    next.classList.add('active');
+                    setProgress(SCREEN_PROGRESS[n] ?? 0);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            }, 240);
         }
 
         function goToSuccess() {
             const current = document.querySelector('.screen.active');
-            if (current) {
-                current.style.animation = 'fadeSlideOut 0.25s ease forwards';
-                setTimeout(() => {
-                    current.classList.remove('active');
-                    current.style.animation = '';
-                    const next = document.getElementById('screen-success');
-                    next.classList.add('active');
-                    setProgress(100);
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }, 250);
-            }
+            if (!current) return;
+            current.style.animation = 'fadeSlideOut 0.24s ease forwards';
+            setTimeout(() => {
+                current.classList.remove('active');
+                current.style.animation = '';
+                const next = document.getElementById('screen-success');
+                next.classList.add('active');
+                setProgress(100);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 240);
         }
 
         function selectOption(el, group) {
             const container = el.closest('.q-options');
             container.querySelectorAll('.q-option').forEach(o => o.classList.remove('selected'));
             el.classList.add('selected');
-            // Enable the next button
-            const btnId = 'btn-' + group;
-            const btn = document.getElementById(btnId);
+            const btn = document.getElementById('btn-' + group);
             if (btn) btn.classList.add('ready');
         }
 
@@ -1108,7 +1231,7 @@
             }
 
             btn.disabled = true;
-            btn.innerHTML = 'Envoi en cours… <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+            btn.innerHTML = 'Envoi en cours…';
 
             const payload = {
                 prenom,
@@ -1117,8 +1240,7 @@
                 situation:       getRadioValue('q1'),
                 projection:      getRadioValue('q2'),
                 blocage:         getRadioValue('q3'),
-                revenu_objectif: getRadioValue('q4'),
-                investissement:  getRadioValue('q5'),
+                investissement:  getRadioValue('q4'),
                 source:          'quiz-v2'
             };
 
@@ -1165,10 +1287,52 @@
 
         function shakeBtn(btn) {
             btn.style.transform = 'translateX(-6px)';
-            setTimeout(() => { btn.style.transform = 'translateX(6px)'; }, 80);
-            setTimeout(() => { btn.style.transform = 'translateX(-4px)'; }, 160);
-            setTimeout(() => { btn.style.transform = 'translateX(0)'; }, 240);
+            setTimeout(() => btn.style.transform = 'translateX(6px)', 80);
+            setTimeout(() => btn.style.transform = 'translateX(-4px)', 160);
+            setTimeout(() => btn.style.transform = 'translateX(0)', 240);
         }
+
+        // ── CAROUSEL AVIS ──
+        (function() {
+            const cards = Array.from(document.querySelectorAll('#proofCarousel .review-card'));
+            const dots  = Array.from(document.querySelectorAll('#proofDots .dot'));
+            const n = cards.length;
+            let current = 0;
+
+            function getPos(i) {
+                const diff = (i - current + n) % n;
+                if (diff === 0)     return '0';
+                if (diff === 1)     return '1';
+                if (diff === n - 1) return '-1';
+                return 'hidden';
+            }
+
+            function update() {
+                cards.forEach((c, i) => c.dataset.pos = getPos(i));
+                dots.forEach((d, i) => d.classList.toggle('active', i === current));
+            }
+
+            function next() { current = (current + 1) % n; update(); }
+            function prev() { current = (current - 1 + n) % n; update(); }
+
+            document.getElementById('proofNext').addEventListener('click', next);
+            document.getElementById('proofPrev').addEventListener('click', prev);
+
+            cards.forEach(card => card.addEventListener('click', () => {
+                if (card.dataset.pos === '1')  next();
+                if (card.dataset.pos === '-1') prev();
+            }));
+
+            // Swipe
+            let startX = 0;
+            const zone = document.getElementById('proofCarousel');
+            zone.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+            zone.addEventListener('touchend',   e => {
+                const dx = e.changedTouches[0].clientX - startX;
+                if (dx < -40) next();
+                else if (dx > 40) prev();
+            }, { passive: true });
+        })();
 
         // Init
         setProgress(0);
