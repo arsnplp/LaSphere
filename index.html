@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>La Sphère — Accompagnement Premium</title>
+    <title>La Sphère — Es-tu éligible ?</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -24,6 +24,7 @@
         }
 
         html { scroll-behavior: smooth; overflow-x: hidden; }
+
         body {
             font-family: var(--font);
             background:
@@ -33,52 +34,92 @@
             color: var(--text);
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
-        }
-        a { text-decoration: none; color: inherit; }
-        img { display: block; max-width: 100%; }
-
-        /* ── NAV ── */
-        .nav {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-            padding: 18px 40px;
-            display: flex; justify-content: space-between; align-items: center;
-            background: rgba(11,11,12,0.7);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .nav-logo {
-            font-family: var(--font-title);
-            font-size: 18px; font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-
-        .nav-logo span { color: var(--red); }
-
-        .nav-cta {
-            background: var(--red);
-            color: #fff;
-            padding: 10px 22px;
-            border-radius: 100px;
-            font-size: 13px;
-            font-weight: 600;
-            transition: background 0.2s, transform 0.2s;
-        }
-        .nav-cta:hover { background: var(--red-light); transform: translateY(-1px); }
-
-        /* ── HERO ── */
-        .hero {
             min-height: 100vh;
-            display: grid;
-            grid-template-columns: 1fr 420px;
-            gap: 60px;
-            align-items: center;
-            padding: 120px 40px 80px;
-            max-width: 1200px;
-            margin: 0 auto;
         }
 
-        .hero-tag {
+        /* ── PROGRESS BAR ── */
+        .progress-bar-container {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            background: rgba(11,11,12,0.88);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .logo {
+            font-family: var(--font-title);
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            flex-shrink: 0;
+        }
+        .logo span { color: var(--red); }
+
+        .progress-track {
+            flex: 1;
+            height: 4px;
+            background: rgba(255,255,255,0.07);
+            border-radius: 100px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--red);
+            border-radius: 100px;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 0%;
+        }
+
+        .progress-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--muted);
+            flex-shrink: 0;
+            min-width: 32px;
+            text-align: right;
+        }
+
+        /* ── QUIZ WRAPPER ── */
+        .quiz-wrapper {
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 90px 24px 60px;
+        }
+
+        .quiz-inner {
+            width: 100%;
+            max-width: 580px;
+        }
+
+        /* ── SCREENS ── */
+        .screen {
+            display: none;
+            animation: fadeSlideIn 0.38s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .screen.active { display: block; }
+
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeSlideOut {
+            from { opacity: 1; transform: translateY(0); }
+            to   { opacity: 0; transform: translateY(-14px); }
+        }
+
+        /* ── SCREEN 1 — HOOK ── */
+        .hook-badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
@@ -87,14 +128,14 @@
             padding: 6px 14px;
             border-radius: 100px;
             font-size: 12px;
-            font-weight: 600;
+            font-weight: 700;
             color: #ff6b6b;
             letter-spacing: 1px;
             text-transform: uppercase;
             margin-bottom: 28px;
         }
 
-        .hero-tag::before {
+        .hook-badge::before {
             content: '';
             width: 6px; height: 6px;
             background: var(--red);
@@ -104,139 +145,161 @@
 
         @keyframes blink {
             0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
+            50%       { opacity: 0.3; }
         }
 
-        .hero-title {
+        .hook-title {
             font-family: var(--font-title);
-            font-size: clamp(36px, 7vw, 92px);
+            font-size: clamp(34px, 6vw, 56px);
             font-weight: 800;
-            letter-spacing: -3px;
-            line-height: 1.0;
-            margin-bottom: 16px;
+            letter-spacing: -2.5px;
+            line-height: 1.05;
+            margin-bottom: 18px;
         }
 
-        .hero-title .accent { color: var(--red); }
+        .hook-title .red { color: var(--red); }
 
-        .hero-title .line-2 {
-            display: block;
+        .hook-sub {
+            font-size: 17px;
             color: var(--muted);
-            font-weight: 600;
+            line-height: 1.7;
+            margin-bottom: 8px;
+            max-width: 480px;
         }
 
-        .hero-sub {
-            font-size: 16px;
-            color: var(--muted);
-            line-height: 1.65;
-            max-width: 620px;
-            margin: 0 auto;
+        .hook-sub strong { color: var(--text); }
+
+        .hook-timer {
+            font-size: 13px;
+            color: var(--muted-2);
+            margin-bottom: 36px;
         }
 
-        .hero-sub strong { color: var(--text); font-weight: 600; }
+        .hook-timer strong { color: var(--muted); }
 
-        .hero-bottom {
-            width: 100%;
+        .hook-trust {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            margin-top: 24px;
-            gap: 16px;
             flex-wrap: wrap;
+            gap: 10px 20px;
+            margin-bottom: 40px;
         }
 
-        .hero-proof {
-            display: flex;
-            align-items: center;
-            gap: 16px;
+        .trust-item {
             font-size: 13px;
             color: var(--muted);
+            display: flex;
+            align-items: center;
+            gap: 7px;
         }
 
-        .hero-proof-item {
-            display: flex; align-items: center; gap: 6px;
-        }
-
-        .hero-proof-item::before {
+        .trust-item::before {
             content: '';
             width: 14px; height: 14px;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23cc0000' stroke-width='2.5'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E");
-            background-size: contain; background-repeat: no-repeat; flex-shrink: 0;
+            background-size: contain;
+            background-repeat: no-repeat;
+            flex-shrink: 0;
         }
 
-        .proof-sep { color: var(--muted-2); }
-
-        /* ── FORM CARD ── */
-        .form-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 36px 32px;
-            position: sticky;
-            top: 100px;
-        }
-
-        .form-card-title {
-            font-family: var(--font-title);
-            font-size: 18px;
+        /* ── CTA BUTTON ── */
+        .btn-cta {
+            width: 100%;
+            background: var(--red);
+            color: #fff;
+            border: none;
+            padding: 18px 28px;
+            border-radius: 14px;
+            font-size: 17px;
             font-weight: 700;
-            margin-bottom: 6px;
+            font-family: var(--font);
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 28px rgba(204,0,0,0.38);
+            letter-spacing: -0.3px;
         }
 
-        .form-card-sub {
-            font-size: 13px;
+        .btn-cta:hover {
+            background: var(--red-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 36px rgba(204,0,0,0.48);
+        }
+
+        .btn-cta:active { transform: translateY(0); }
+
+        /* ── QUESTION SCREENS ── */
+        .q-step-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 14px;
+        }
+
+        .q-title {
+            font-family: var(--font-title);
+            font-size: clamp(24px, 4.5vw, 36px);
+            font-weight: 700;
+            letter-spacing: -1.2px;
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+
+        .q-sub {
+            font-size: 15px;
             color: var(--muted);
-            margin-bottom: 24px;
-            line-height: 1.5;
-        }
-
-        /* Engagement questions */
-        .q-block { margin-bottom: 20px; }
-
-        .q-label {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text);
-            margin-bottom: 10px;
-            display: block;
+            margin-bottom: 32px;
+            line-height: 1.6;
         }
 
         .q-options {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
+            margin-bottom: 28px;
         }
 
         .q-option {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 11px 14px;
+            gap: 14px;
+            padding: 16px 20px;
             background: rgba(255,255,255,0.03);
-            border: 1px solid var(--border);
-            border-radius: 10px;
+            border: 1.5px solid var(--border);
+            border-radius: 14px;
             cursor: pointer;
-            font-size: 13px;
-            color: var(--muted);
-            transition: all 0.2s;
+            transition: all 0.18s;
             user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .q-option input { display: none; }
 
         .q-option-dot {
-            width: 16px; height: 16px;
-            border: 1.5px solid var(--muted-2);
+            width: 20px; height: 20px;
+            border: 2px solid var(--muted-2);
             border-radius: 50%;
             flex-shrink: 0;
-            transition: all 0.2s;
+            transition: all 0.18s;
             display: flex; align-items: center; justify-content: center;
+        }
+
+        .q-option-text {
+            flex: 1;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--muted);
+            line-height: 1.4;
         }
 
         .q-option.selected {
             border-color: var(--red);
             background: var(--red-dim);
-            color: var(--text);
+            box-shadow: 0 0 0 1px rgba(204,0,0,0.18);
         }
 
         .q-option.selected .q-option-dot {
@@ -246,731 +309,108 @@
 
         .q-option.selected .q-option-dot::after {
             content: '';
-            width: 6px; height: 6px;
+            width: 8px; height: 8px;
             background: #fff;
             border-radius: 50%;
         }
 
+        .q-option.selected .q-option-text { color: var(--text); }
+
         .q-option:hover:not(.selected) {
-            border-color: rgba(204,0,0,0.3);
-            color: var(--text);
+            border-color: rgba(204,0,0,0.28);
+            background: rgba(255,255,255,0.05);
         }
 
-        /* Form fields */
-        .fields-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
+        .q-option:hover:not(.selected) .q-option-text { color: var(--text); }
 
-        .field-wrap { display: flex; flex-direction: column; gap: 6px; }
-        .field-wrap.full { grid-column: 1 / -1; }
-
-        .field-wrap label {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .field-wrap input, .field-wrap textarea {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 12px 14px;
-            font-size: 14px;
-            color: var(--text);
-            font-family: var(--font);
-            outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s;
-            width: 100%;
-        }
-
-        .field-wrap input::placeholder, .field-wrap textarea::placeholder { color: var(--muted-2); }
-
-        .field-wrap input:focus, .field-wrap textarea:focus {
-            border-color: var(--red);
-            box-shadow: 0 0 0 3px rgba(204,0,0,0.12);
-        }
-
-        .field-wrap textarea { resize: none; height: 80px; }
-
-        .form-divider {
-            border: none;
-            border-top: 1px solid var(--border);
-            margin: 20px 0;
-        }
-
-        .submit-btn {
+        /* ── NEXT BUTTON ── */
+        .btn-next {
             width: 100%;
             background: var(--red);
             color: #fff;
             border: none;
-            padding: 15px;
-            border-radius: 12px;
-            font-size: 15px;
+            padding: 17px;
+            border-radius: 14px;
+            font-size: 16px;
             font-weight: 700;
             font-family: var(--font);
             cursor: pointer;
-            transition: background 0.2s, transform 0.2s;
+            transition: background 0.2s, transform 0.15s, box-shadow 0.2s, opacity 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-        }
-        .submit-btn:hover { background: var(--red-light); transform: translateY(-1px); }
-        .submit-btn:active { transform: translateY(0); }
-
-        .form-note {
-            text-align: center;
-            font-size: 12px;
-            color: var(--muted-2);
-            margin-top: 12px;
-            line-height: 1.5;
-        }
-
-        /* ── SECTION COMMON ── */
-        .section { padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
-
-        .s-label {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--red);
-            margin-bottom: 14px;
-        }
-
-        .s-title {
-            font-family: var(--font-title);
-            font-size: clamp(28px, 4vw, 46px);
-            font-weight: 700;
-            letter-spacing: -1.5px;
-            line-height: 1.1;
-            margin-bottom: 16px;
-        }
-
-        .s-desc { font-size: 16px; color: var(--muted); line-height: 1.7; max-width: 560px; margin-bottom: 60px; }
-
-        /* ── PROGRAM ── */
-        .program-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-        }
-
-        .phase-card {
-            background: linear-gradient(135deg, #1a1a1c 0%, #131315 100%);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 32px;
-            transition: border-color 0.3s, background 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .phase-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 2px;
-            background: var(--red);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .phase-card:hover { border-color: rgba(204,0,0,0.3); }
-        .phase-card:hover::before { opacity: 1; }
-
-        .phase-num {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            color: var(--red);
-            margin-bottom: 12px;
-            font-family: 'Courier New', monospace;
-        }
-
-        .phase-title {
-            font-family: var(--font-title);
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 16px;
-        }
-
-        .phase-items {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .phase-items li {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            font-size: 14px;
-            color: var(--muted);
-            line-height: 1.5;
-        }
-
-        .phase-items li::before {
-            content: '';
-            width: 14px; height: 14px;
-            flex-shrink: 0; margin-top: 2px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23cc0000' stroke-width='2.5'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E");
-            background-size: contain; background-repeat: no-repeat;
-        }
-
-        /* ── WHO FOR ── */
-        .who-wrap {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-
-        .who-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .who-list li {
-            display: flex;
-            align-items: flex-start;
-            gap: 14px;
-            padding: 20px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            font-size: 15px;
-            line-height: 1.5;
-        }
-
-        .who-list li .icon {
-            font-size: 20px;
-            flex-shrink: 0;
-            margin-top: 1px;
-        }
-
-        .who-list li strong { color: var(--text); display: block; font-weight: 600; margin-bottom: 3px; }
-        .who-list li span { color: var(--muted); font-size: 13px; }
-
-        /* ── MID CTA ── */
-        .mid-cta {
-            background: var(--bg-2);
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            padding: 80px 40px;
-            text-align: center;
-        }
-
-        .mid-cta-inner { max-width: 700px; margin: 0 auto; }
-
-        .mid-cta h2 {
-            font-family: var(--font-title);
-            font-size: clamp(28px, 4vw, 48px);
-            font-weight: 700;
-            letter-spacing: -1.5px;
-            margin-bottom: 16px;
-        }
-
-        .mid-cta p { font-size: 16px; color: var(--muted); margin-bottom: 32px; line-height: 1.6; }
-
-        .mid-cta-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: var(--red);
-            color: #fff;
-            padding: 16px 36px;
-            border-radius: 100px;
-            font-size: 15px;
-            font-weight: 700;
-            transition: background 0.2s, transform 0.2s;
-        }
-        .mid-cta-btn:hover { background: var(--red-light); transform: translateY(-2px); }
-
-        /* ── BOTTOM FORM ── */
-        .bottom-form-section {
-            padding: 100px 40px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .bottom-form-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 52px 48px;
-        }
-
-        .bottom-form-title {
-            font-family: var(--font-title);
-            font-size: clamp(24px, 3.5vw, 36px);
-            font-weight: 700;
-            letter-spacing: -1px;
-            margin-bottom: 10px;
-        }
-
-        .bottom-form-sub { font-size: 15px; color: var(--muted); line-height: 1.6; margin-bottom: 36px; }
-
-        /* ── CONTACT ── */
-        .contact-bar {
-            padding: 60px 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 32px;
-            border-top: 1px solid var(--border);
-        }
-
-        .contact-bar-left h3 {
-            font-family: var(--font-title);
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
-
-        .contact-bar-left p { font-size: 14px; color: var(--muted); }
-
-        .contact-links {
-            display: flex;
-            gap: 16px;
-        }
-
-        .contact-link {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 14px 20px;
-            font-size: 14px;
-            font-weight: 500;
-            transition: border-color 0.2s, background 0.2s;
-        }
-
-        .contact-link:hover {
-            border-color: rgba(204,0,0,0.4);
-            background: var(--red-dim);
-        }
-
-        .contact-link-icon { font-size: 18px; }
-
-        /* ── FOOTER ── */
-        .footer {
-            padding: 30px 40px;
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .footer-logo {
-            font-family: var(--font-title);
-            font-size: 16px;
-            font-weight: 700;
-        }
-
-        .footer-logo span { color: var(--red); }
-        .footer-copy { font-size: 13px; color: var(--muted); }
-
-        /* ── PROGRAMME ── */
-        .prog-section {
-            padding: 100px 40px;
-            border-top: 1px solid var(--border);
-            background: linear-gradient(180deg, rgba(180,0,0,0.05) 0%, transparent 50%);
-        }
-
-        .prog-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .prog-header {
-            max-width: 640px;
-            margin-bottom: 56px;
-        }
-
-        .prog-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-        }
-
-        .prog-card {
-            background: linear-gradient(135deg, #1a1a1c 0%, #131315 100%);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 28px 24px;
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-
-        .prog-card:hover {
-            border-color: rgba(204,0,0,0.35);
-            box-shadow: 0 8px 32px rgba(180,0,0,0.1);
-        }
-
-        .prog-card-top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 16px;
-        }
-
-        .prog-num {
-            font-size: 13px;
-            font-weight: 800;
-            color: var(--red);
-            font-family: 'Courier New', monospace;
-            letter-spacing: 1px;
-        }
-
-        .prog-tag {
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--muted);
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--border);
-            padding: 3px 10px;
-            border-radius: 100px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .prog-card-title {
-            font-family: var(--font-title);
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            letter-spacing: -0.3px;
-        }
-
-        .prog-card-desc {
-            font-size: 13px;
-            color: var(--muted);
-            line-height: 1.65;
-        }
-
-        @media (max-width: 1024px) {
-            .prog-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-
-        @media (max-width: 640px) {
-            .prog-section { padding: 70px 20px; }
-            .prog-grid { grid-template-columns: 1fr; }
-        }
-
-        /* ── MODAL ── */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            z-index: 500;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            opacity: 0;
+            box-shadow: 0 4px 24px rgba(204,0,0,0.35);
+            opacity: 0.45;
             pointer-events: none;
-            transition: opacity 0.3s;
         }
 
-        .modal-overlay.active {
+        .btn-next.ready {
             opacity: 1;
             pointer-events: all;
         }
 
-        .modal-box {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 36px 32px;
-            width: 100%;
-            max-width: 480px;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-            transform: translateY(20px);
-            transition: transform 0.3s;
-            scrollbar-width: thin;
+        .btn-next.ready:hover {
+            background: var(--red-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(204,0,0,0.45);
         }
 
-        .modal-overlay.active .modal-box {
-            transform: translateY(0);
+        .btn-next.ready:active { transform: translateY(0); }
+
+        /* ── SCREEN 5 — SOCIAL PROOF ── */
+        .proof-header {
+            text-align: center;
+            margin-bottom: 36px;
         }
 
-        .modal-close {
-            position: absolute;
-            top: 16px; right: 16px;
-            width: 32px; height: 32px;
-            background: rgba(255,255,255,0.06);
-            border: 1px solid var(--border);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer;
-            font-size: 16px; color: var(--muted);
-            transition: all 0.2s;
-        }
+        .proof-header .q-step-label { text-align: center; }
 
-        .modal-close:hover { background: rgba(255,255,255,0.12); color: var(--text); }
-
-        /* ── ARROWS ── */
-        .video-container {
-            width: 100%;
-            position: relative;
-            margin-top: 32px;
-        }
-
-        .video-arrow-left,
-        .video-arrow-right {
-            position: absolute;
-            top: -72px;
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            pointer-events: none;
-        }
-
-        .video-arrow-left  { left: 60px; align-items: flex-start; animation: bounceLeft 2s ease-in-out infinite; }
-        .video-arrow-right { right: 60px; align-items: flex-end; animation: bounceRight 2s ease-in-out infinite; animation-delay: 0.25s; }
-
-        .video-arrow-left span,
-        .video-arrow-right span {
-            font-size: 13px;
-            color: var(--red);
-            font-weight: 600;
-            font-style: italic;
-            opacity: 0.9;
-            padding-bottom: 6px;
-        }
-
-        @keyframes bounceLeft {
-            0%, 100% { transform: translate(0, 0); }
-            50%       { transform: translate(5px, 5px); }
-        }
-
-        @keyframes bounceRight {
-            0%, 100% { transform: translate(0, 0); }
-            50%       { transform: translate(-5px, 5px); }
-        }
-
-        @media (max-width: 768px) {
-            .video-arrow-left, .video-arrow-right { display: none; }
-        }
-
-        /* ── VIDEO PLACEHOLDER ── */
-        @keyframes neonPulse {
-            0%, 100% {
-                box-shadow:
-                    0 0 6px 1px rgba(220,30,30,0.7),
-                    0 0 18px 3px rgba(220,30,30,0.4),
-                    0 0 40px 6px rgba(220,30,30,0.15);
-                border-color: rgba(210,40,40,0.85);
-            }
-            50% {
-                box-shadow:
-                    0 0 10px 2px rgba(255,60,60,1),
-                    0 0 28px 6px rgba(220,30,30,0.6),
-                    0 0 60px 12px rgba(200,0,0,0.25);
-                border-color: rgba(255,70,70,1);
-            }
-        }
-
-        .video-wrap {
-            width: 100%;
-            margin: 24px auto 0;
-            aspect-ratio: 16/9;
-            background: var(--bg-card);
-            border: 1.5px solid rgba(210,40,40,0.85);
-            border-radius: 18px;
-            overflow: hidden;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: neonPulse 2.8s ease-in-out infinite;
-        }
-
-
-        .video-wrap video {
-            width: 100%; height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .video-placeholder-inner {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 14px;
-            color: var(--muted);
-        }
-
-        .video-play-icon {
-            width: 64px; height: 64px;
-            background: rgba(204,0,0,0.15);
-            border: 1.5px solid rgba(204,0,0,0.3);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-        }
-
-        .video-play-icon svg { margin-left: 4px; }
-
-        .video-placeholder-inner span {
-            font-size: 13px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        /* ── HERO CENTERED ── */
-        .hero-cta-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-shrink: 0;
-        }
-
-        .btn-red {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--red);
-            color: #fff;
-            padding: 15px 32px;
-            border-radius: 100px;
-            font-size: 15px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.2s;
-            border: none;
-            font-family: var(--font);
-        }
-        .btn-red:hover { background: var(--red-light); transform: translateY(-1px); }
-
-        .btn-ghost {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: transparent;
-            color: var(--muted);
-            padding: 15px 24px;
-            border-radius: 100px;
-            font-size: 14px;
-            font-weight: 500;
-            border: 1px solid var(--border);
-            transition: all 0.2s;
-        }
-        .btn-ghost:hover { color: var(--text); border-color: #444; }
-
-        /* ── WEBAPP LABEL ── */
-        .hero-webapp-label {
-            font-size: 12px;
-            font-weight: 500;
-            color: var(--muted);
-            letter-spacing: 0.3px;
-            margin-bottom: 10px;
-            margin-top: -4px;
-        }
-
-        /* ── REVIEWS ── */
-        .reviews-section {
-            border-top: 1px solid var(--border);
-            padding: 64px 40px;
-            overflow-x: clip;
-            background:
-                radial-gradient(ellipse 100% 80% at 70% 50%, rgba(180,0,0,0.06) 0%, transparent 60%),
-                rgba(255,255,255,0.012);
-        }
-
-        .reviews-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .reviews-label {
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin-bottom: 28px;
-        }
-
-        .reviews-wrap {
-            display: flex;
-            gap: 60px;
-            align-items: center;
-        }
-
-        .reviews-left {
-            max-width: 380px;
-            padding-top: 8px;
-        }
-
-        .reviews-left h2 {
+        .proof-header h2 {
             font-family: var(--font-title);
-            font-size: clamp(26px, 3vw, 38px);
+            font-size: clamp(26px, 5.5vw, 38px);
             font-weight: 700;
             letter-spacing: -1.5px;
             line-height: 1.15;
-            margin-bottom: 16px;
+            margin-bottom: 10px;
         }
 
-        .reviews-left h2 span { color: var(--red); }
+        .proof-header h2 .red { color: var(--red); }
 
-        .reviews-left p {
-            font-size: 14px;
+        .proof-header p {
+            font-size: 15px;
             color: var(--muted);
-            line-height: 1.7;
-            margin-bottom: 28px;
+            line-height: 1.6;
         }
 
-        /* Carousel */
-        .reviews-carousel {
-            flex-shrink: 0;
+        /* ── CAROUSEL ── */
+        .proof-carousel-wrap {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 24px;
-            overflow: visible;
-            margin-left: auto;
-            padding-right: 20px;
-            margin-right: 150px;
+            gap: 28px;
+            margin-bottom: 36px;
         }
 
         .carousel-stage {
             position: relative;
-            width: 300px;
-            height: 620px;
+            width: 240px;
+            height: 500px;
             overflow: visible;
         }
 
         .review-card {
             position: absolute;
-            width: 300px;
-            left: 0;
-            top: 0;
+            width: 240px;
+            left: 0; top: 0;
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 20px;
+            border-radius: 18px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             transform-origin: center center;
-            transition: transform 0.45s cubic-bezier(0.4,0,0.2,1), opacity 0.45s ease, box-shadow 0.45s ease;
+            transition: transform 0.42s cubic-bezier(0.4,0,0.2,1), opacity 0.42s ease, box-shadow 0.42s ease;
             will-change: transform, opacity;
         }
 
@@ -978,22 +418,22 @@
             transform: translateX(0) scale(1) rotate(0deg);
             z-index: 3;
             opacity: 1;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.55);
             cursor: default;
         }
 
         .review-card[data-pos="-1"] {
-            transform: translateX(-175px) scale(0.82) rotate(-8deg);
+            transform: translateX(-155px) scale(0.8) rotate(-7deg);
             z-index: 2;
-            opacity: 0.55;
+            opacity: 0.5;
             box-shadow: none;
             cursor: pointer;
         }
 
         .review-card[data-pos="1"] {
-            transform: translateX(175px) scale(0.82) rotate(8deg);
+            transform: translateX(155px) scale(0.8) rotate(7deg);
             z-index: 2;
-            opacity: 0.55;
+            opacity: 0.5;
             box-shadow: none;
             cursor: pointer;
         }
@@ -1005,19 +445,15 @@
             pointer-events: none;
         }
 
-        /* ── MATHIS card (filmed horizontally) ── */
-        /* Show landscape video sideways to fill portrait card */
         .mathis-card .review-video-wrap iframe {
             transform: rotate(90deg) translateY(55%) scale(1.78);
             transform-origin: center center;
         }
 
-        /* When active: rotate whole card to landscape → video net 0° = upright */
         .mathis-card[data-pos="0"] {
             transform: translateX(0) scale(1) rotate(-90deg) !important;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5) !important;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.55) !important;
         }
-
 
         .review-video-wrap {
             width: 100%;
@@ -1029,90 +465,304 @@
 
         .review-video-wrap iframe,
         .review-video-wrap video {
-            width: 100%;
-            height: 100%;
-            border: none;
-            display: block;
+            width: 100%; height: 100%;
+            border: none; display: block;
+            position: absolute; top: 0; left: 0;
         }
 
         .review-footer {
-            padding: 20px 22px;
+            padding: 16px 18px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
+            gap: 10px;
         }
 
         .review-author {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 9px;
         }
 
         .review-avatar {
-            width: 36px; height: 36px;
+            width: 32px; height: 32px;
             background: var(--red-dim);
             border: 1px solid rgba(204,0,0,0.25);
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            font-weight: 700; font-size: 14px;
+            font-weight: 700; font-size: 13px;
             color: var(--red);
             flex-shrink: 0;
         }
 
-        .review-name { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+        .review-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
         .review-detail { font-size: 11px; color: var(--muted); }
 
         .review-badge {
             font-family: var(--font-title);
-            font-size: 15px;
+            font-size: 13px;
             font-weight: 800;
             color: var(--red);
             white-space: nowrap;
-            letter-spacing: -0.5px;
         }
 
         .carousel-controls {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 16px;
         }
 
         .carousel-btn {
-            background: rgba(255,255,255,0.1);
-            border: 1.5px solid rgba(255,255,255,0.35);
+            background: rgba(255,255,255,0.08);
+            border: 1.5px solid rgba(255,255,255,0.2);
             border-radius: 50%;
-            width: 44px;
-            height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 42px; height: 42px;
+            display: flex; align-items: center; justify-content: center;
             cursor: pointer;
             color: #fff;
-            transition: border-color 0.2s, background 0.2s, color 0.2s;
+            transition: border-color 0.2s, background 0.2s;
             flex-shrink: 0;
         }
-        .carousel-btn:hover { border-color: var(--red); background: var(--red); color: #fff; }
+
+        .carousel-btn:hover { border-color: var(--red); background: var(--red); }
 
         .carousel-dots { display: flex; gap: 7px; align-items: center; }
 
         .dot {
-            width: 6px;
-            height: 6px;
+            width: 6px; height: 6px;
             border-radius: 50%;
             background: var(--border);
             transition: background 0.25s, transform 0.25s;
         }
-        .dot.active { background: var(--red); transform: scale(1.35); }
 
-        @media (max-width: 900px) {
-            .reviews-wrap { flex-direction: column; align-items: center; gap: 36px; }
-            .reviews-left { max-width: 100%; width: 100%; }
-            .reviews-carousel { width: 100%; align-items: center; }
+        .dot.active { background: var(--red); transform: scale(1.4); }
+
+        /* ── SCREEN 6 — ÉTAT D'ESPRIT ── */
+        /* ── SCREEN 7 — CONTACT ── */
+        .contact-header {
+            margin-bottom: 32px;
         }
 
-        @media (max-width: 600px) {
-            .reviews-section { padding: 50px 20px; }
+        .contact-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0,180,60,0.1);
+            border: 1px solid rgba(0,180,60,0.22);
+            padding: 5px 14px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #4ade80;
+            margin-bottom: 20px;
+        }
+
+        .contact-header h2 {
+            font-family: var(--font-title);
+            font-size: clamp(24px, 5vw, 34px);
+            font-weight: 700;
+            letter-spacing: -1.2px;
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+
+        .contact-header p {
+            font-size: 15px;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .fields-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 28px;
+        }
+
+        .field-wrap { display: flex; flex-direction: column; gap: 7px; }
+
+        .field-wrap label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        .field-wrap input {
+            background: rgba(255,255,255,0.04);
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            padding: 15px 16px;
+            font-size: 15px;
+            color: var(--text);
+            font-family: var(--font);
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            width: 100%;
+        }
+
+        .field-wrap input::placeholder { color: var(--muted-2); }
+
+        .field-wrap input:focus {
+            border-color: var(--red);
+            box-shadow: 0 0 0 3px rgba(204,0,0,0.1);
+        }
+
+        .contact-microcopy {
+            text-align: center;
+            font-size: 12px;
+            color: var(--muted-2);
+            margin-top: 14px;
+            line-height: 1.7;
+        }
+
+        .contact-microcopy strong { color: var(--muted); }
+
+        /* ── SCREEN SUCCESS ── */
+        .success-screen {
+            text-align: center;
+            padding: 10px 0 20px;
+        }
+
+        .success-icon {
+            width: 80px; height: 80px;
+            background: rgba(0,180,60,0.1);
+            border: 1px solid rgba(0,180,60,0.25);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 36px;
+            margin: 0 auto 24px;
+            animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0); opacity: 0; }
+            to   { transform: scale(1); opacity: 1; }
+        }
+
+        .success-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0,180,60,0.1);
+            border: 1px solid rgba(0,180,60,0.25);
+            padding: 6px 18px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #4ade80;
+            margin-bottom: 20px;
+        }
+
+        .success-screen h2 {
+            font-family: var(--font-title);
+            font-size: clamp(28px, 6vw, 42px);
+            font-weight: 800;
+            letter-spacing: -1.8px;
+            margin-bottom: 12px;
+        }
+
+        .success-screen h2 .red { color: var(--red); }
+
+        .success-screen > p {
+            font-size: 15px;
+            color: var(--muted);
+            line-height: 1.7;
+            max-width: 440px;
+            margin: 0 auto 32px;
+        }
+
+        .success-social {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 32px;
+            text-align: left;
+        }
+
+        .success-proof-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 18px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .success-proof-item .avatar {
+            width: 34px; height: 34px;
+            background: var(--red-dim);
+            border: 1px solid rgba(204,0,0,0.25);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 13px; color: var(--red);
+            flex-shrink: 0;
+        }
+
+        .success-proof-item .info strong {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .success-proof-item .info span { font-size: 12px; color: var(--muted); }
+
+        .success-proof-item .badge {
+            margin-left: auto;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--red);
+            white-space: nowrap;
+        }
+
+        .btn-cal {
+            width: 100%;
+            background: var(--red);
+            color: #fff;
+            border: none;
+            padding: 18px 28px;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 700;
+            font-family: var(--font);
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 28px rgba(204,0,0,0.38);
+            text-decoration: none;
+        }
+
+        .btn-cal:hover {
+            background: var(--red-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 36px rgba(204,0,0,0.48);
+        }
+
+        .success-note {
+            font-size: 12px;
+            color: var(--muted-2);
+            margin-top: 14px;
+        }
+
+        /* ── MICRO COPY ── */
+        .hook-micro {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 22px;
+            padding-top: 22px;
+            border-top: 1px solid var(--border);
+        }
+
+        .micro-item {
+            font-size: 12px;
+            color: var(--muted-2);
         }
 
         /* ── SCROLLBAR ── */
@@ -1120,151 +770,176 @@
         ::-webkit-scrollbar-track { background: var(--bg); }
         ::-webkit-scrollbar-thumb { background: #2a2a2e; border-radius: 3px; }
 
-        /* ── SUCCESS STATE ── */
-        .form-success {
-            display: none;
-            text-align: center;
-            padding: 30px 0;
-        }
-
-        .form-success-icon {
-            width: 60px; height: 60px;
-            background: var(--red-dim);
-            border: 1px solid rgba(204,0,0,0.3);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 24px;
-            margin: 0 auto 16px;
-        }
-
-        .form-success h3 {
-            font-family: var(--font-title);
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .form-success p { font-size: 14px; color: var(--muted); line-height: 1.6; }
-
         /* ── RESPONSIVE ── */
-        @media (max-width: 768px) {
-            .hero-bottom { flex-direction: column; align-items: flex-start; gap: 16px; }
-            .hero-cta-row { flex-wrap: wrap; }
+        @media (min-width: 640px) {
+            .carousel-stage { width: 280px; height: 580px; }
+            .review-card { width: 280px; }
+            .review-card[data-pos="-1"] { transform: translateX(-175px) scale(0.8) rotate(-7deg); }
+            .review-card[data-pos="1"]  { transform: translateX(175px) scale(0.8) rotate(7deg); }
         }
 
-        @media (max-width: 640px) {
-            .nav { padding: 16px 20px; }
-            .hero { padding: 90px 20px 28px !important; }
-            .hero-title { letter-spacing: -2px; }
-            .section { padding: 70px 20px; }
-            .footer { padding: 24px 20px; flex-direction: column; gap: 12px; text-align: center; }
-            .fields-grid { grid-template-columns: 1fr; }
-            .modal-box { padding: 28px 20px; }
+        @media (max-width: 480px) {
+            .quiz-wrapper { padding: 78px 16px 50px; }
+            .hook-title { letter-spacing: -1.8px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- NAV -->
-    <nav class="nav">
-        <div class="nav-logo">La <span>Sphère</span></div>
-        <button class="nav-cta" onclick="openModal()">Rejoindre le programme →</button>
-    </nav>
-
-    <!-- HERO -->
-    <section class="hero" id="hero" style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:90px 60px 32px;max-width:1200px;margin:0 auto;width:100%;">
-
-        <div class="hero-tag">Accompagnement • Places limitées</div>
-        <div class="hero-webapp-label">Crée & vends des WebApps à des entreprises — de A à Z</div>
-        <h1 class="hero-title">
-            De zéro <span class="accent">au premier</span> <span class="line-2">contrat signé.</span>
-        </h1>
-        <p class="hero-sub">
-            La Sphère, c'est un accompagnement <strong>de bout en bout</strong> — du branding à la vente, du build au déploiement. On ne te laisse pas dans le tunnel. On construit ton agence ensemble.
-        </p>
-
-        <!-- VIDEO + ARROWS -->
-        <div class="video-container">
-
-            <!-- Flèche gauche : part de gauche, pointe vers la droite-bas (vers la vidéo) -->
-            <div class="video-arrow-left">
-                <span>Regarde</span>
-                <svg width="70" height="56" viewBox="0 0 70 56" fill="none">
-                    <path d="M4 8 C10 6, 28 4, 44 18 C54 27, 60 38, 62 50" stroke="#cc0000" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-                    <path d="M62 50 L52 46" stroke="#cc0000" stroke-width="1.8" stroke-linecap="round"/>
-                    <path d="M62 50 L60 39" stroke="#cc0000" stroke-width="1.8" stroke-linecap="round"/>
-                </svg>
-            </div>
-
-            <!-- Flèche droite : part de droite, pointe vers la gauche-bas (vers la vidéo) -->
-            <div class="video-arrow-right">
-                <span>Regarde</span>
-                <svg width="70" height="56" viewBox="0 0 70 56" fill="none">
-                    <path d="M66 8 C60 6, 42 4, 26 18 C16 27, 10 38, 8 50" stroke="#cc0000" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-                    <path d="M8 50 L18 46" stroke="#cc0000" stroke-width="1.8" stroke-linecap="round"/>
-                    <path d="M8 50 L10 39" stroke="#cc0000" stroke-width="1.8" stroke-linecap="round"/>
-                </svg>
-            </div>
-
-            <div class="video-wrap">
-                <iframe
-                    src="https://fast.wistia.net/embed/iframe/3dtpebgzr0?videoFoam=true&autoPlay=false"
-                    allowtransparency="true" frameborder="0" scrolling="no"
-                    allowfullscreen mozallowfullscreen webkitallowfullscreen
-                    style="width:100%;height:100%;position:absolute;top:0;left:0;"
-                ></iframe>
-            </div>
-
-        </div><!-- /video-container -->
-
-        <div class="hero-bottom">
-            <div class="hero-proof">
-                <div class="hero-proof-item">Closing inclus</div>
-                <span class="proof-sep">·</span>
-                <div class="hero-proof-item">Technique incluse</div>
-                <span class="proof-sep">·</span>
-                <div class="hero-proof-item">Suivi personnalisé</div>
-            </div>
-            <div class="hero-cta-row">
-                <button class="btn-red" onclick="openModal()">
-                    Rejoindre le programme
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </button>
-                <a href="#programme" class="btn-ghost">Voir le programme</a>
-            </div>
+    <!-- PROGRESS BAR -->
+    <div class="progress-bar-container">
+        <div class="logo">La <span>Sphère</span></div>
+        <div class="progress-track">
+            <div class="progress-fill" id="progressFill"></div>
         </div>
+        <div class="progress-label" id="progressLabel">0%</div>
+    </div>
 
-    </section>
+    <!-- QUIZ WRAPPER -->
+    <div class="quiz-wrapper">
+        <div class="quiz-inner">
 
-    <!-- AVIS CLIENTS -->
-    <section class="reviews-section">
-        <div class="reviews-inner">
-            <div class="reviews-label">Ils l'ont fait. Toi aussi tu peux.</div>
-            <div class="reviews-wrap">
+            <!-- ── ÉCRAN 1 : HOOK ── -->
+            <div class="screen active" id="screen-1">
+                <div class="hook-badge">Places limitées</div>
+                <h1 class="hook-title">
+                    Prêt à lancer<br>(ou scaler) ton<br><span class="red">agence IA ?</span>
+                </h1>
+                <p class="hook-sub">
+                    Réponds à <strong>4 questions</strong> pour voir si tu es éligible à l'accompagnement.
+                </p>
+                <div class="hook-timer">⏱ 30 secondes &nbsp;·&nbsp; Sans engagement &nbsp;·&nbsp; 100% gratuit</div>
+                <div class="hook-trust">
+                    <div class="trust-item">Résultats en 30–60 jours</div>
+                    <div class="trust-item">Méthode éprouvée</div>
+                    <div class="trust-item">Sélection rigoureuse</div>
+                </div>
+                <button class="btn-cta" onclick="goTo(2)">
+                    Commencer
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+                <div class="hook-micro">
+                    <span class="micro-item">100% des personnes accompagnées ont eu des résultats</span>
+                    <span class="micro-item">Pas pour tout le monde — on sélectionne</span>
+                </div>
+            </div>
 
-                <!-- Texte gauche -->
-                <div class="reviews-left">
-                    <h2>Des résultats<br><span>concrets.</span><br>Pas des promesses.</h2>
-                    <p>Rémi est passé de zéro connaissance à 3 000 €/mois. Quentin a contracté plus de 15 000 € en 4 mois. Elie génère maintenant 4 000 €/mois. Des parcours différents, une seule méthode.</p>
-                    <button class="btn-red" onclick="openModal()" style="font-size:14px;padding:12px 24px;">
-                        Je veux le même résultat
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                    </button>
+            <!-- ── ÉCRAN 2 : SITUATION ── -->
+            <div class="screen" id="screen-2">
+                <div class="q-step-label">Question 1 / 4</div>
+                <h2 class="q-title">Où en es-tu aujourd'hui ?</h2>
+                <p class="q-sub">Choisis la situation qui te correspond le mieux.</p>
+                <div class="q-options" data-group="q1">
+                    <label class="q-option" onclick="selectOption(this, 'q1')">
+                        <input type="radio" name="q1" value="zero">
+                        <span class="q-option-dot"></span>
+                        <span class="q-option-text">Je pars de zéro</span>
+                    </label>
+                    <label class="q-option" onclick="selectOption(this, 'q1')">
+                        <input type="radio" name="q1" value="idee">
+                        <span class="q-option-dot"></span>
+                        <span class="q-option-text">J'ai une idée mais je bloque</span>
+                    </label>
+                    <label class="q-option" onclick="selectOption(this, 'q1')">
+                        <input type="radio" name="q1" value="galere">
+                        <span class="q-option-dot"></span>
+                        <span class="q-option-text">J'ai déjà commencé mais je galère</span>
+                    </label>
+                    <label class="q-option" onclick="selectOption(this, 'q1')">
+                        <input type="radio" name="q1" value="scale">
+                        <span class="q-option-dot"></span>
+                        <span class="q-option-text">Je fais déjà du CA mais je veux scaler</span>
+                    </label>
+                </div>
+                <button class="btn-next" id="btn-q1" onclick="goTo(3)">
+                    Continuer
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+
+            <!-- ── ÉCRAN 3 : PROJECTION ── -->
+            <div class="screen" id="screen-3">
+                <div class="q-step-label">Question 2 / 4</div>
+                <h2 class="q-title">Où veux-tu être dans <span style="color:var(--red)">3 mois</span> ?</h2>
+                <p class="q-sub">Visualise ton objectif — c'est ça qui crée la motivation.</p>
+                <div class="q-options" data-group="q2">
+                    <label class="q-option" onclick="selectOption(this, 'q2')">
+                        <input type="radio" name="q2" value="premiers-clients">
+                        <span class="q-option-dot"></span>
+                        <span class="q-option-text">Signer mes premiers clients</span>
+                    </label>
+                    <label class="q-option" onclick="selectOption(this, 'q2')">
+                        <input type="radio" name="q2" value="2k-5k">
+                        <span class="q-option-dot"></span>
+                        <span class="q-option-text">Générer 2k–5k€/mois</span>
+                    </label>
+                    <label class="q-option" onclick="selectOption(this, 'q2')">
+                        <input type="radio" name="q2" value="5k-10k">
+                        <span class="q-option-dot"></span>
+                        <span class="q-option-text">Passer à 5k–10k€/mois</span>
+                    </label>
+                    <label class="q-option" onclick="selectOption(this, 'q2')">
+                        <input type="radio" name="q2" value="10k+">
+                        <span class="q-option-dot"></span>
+                        <span class="q-option-text">Dépasser 10k€/mois</span>
+                    </label>
+                </div>
+                <button class="btn-next" id="btn-q2" onclick="goTo(4)">
+                    Continuer
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+
+            <!-- ── ÉCRAN 4 : DOULEUR ── -->
+            <div class="screen" id="screen-4">
+                <div class="q-step-label">Question 3 / 4</div>
+                <h2 class="q-title">Qu'est-ce qui te <span style="color:var(--red)">bloque</span> le plus ?</h2>
+                <p class="q-sub">Sois honnête — c'est ce qui nous permet de vraiment t'aider.</p>
+                <div class="q-options" data-group="q3">
+                    <label class="q-option" onclick="selectOption(this, 'q3')">
+                        <input type="radio" name="q3" value="quoi-vendre">
+                        <span class="q-option-dot"></span>
+                        <span class="q-option-text">Je ne sais pas quoi vendre</span>
+                    </label>
+                    <label class="q-option" onclick="selectOption(this, 'q3')">
+                        <input type="radio" name="q3" value="trouver-clients">
+                        <span class="q-option-dot"></span>
+                        <span class="q-option-text">Je ne trouve pas de clients</span>
+                    </label>
+                    <label class="q-option" onclick="selectOption(this, 'q3')">
+                        <input type="radio" name="q3" value="methode">
+                        <span class="q-option-dot"></span>
+                        <span class="q-option-text">Je manque de méthode</span>
+                    </label>
+                    <label class="q-option" onclick="selectOption(this, 'q3')">
+                        <input type="radio" name="q3" value="discipline">
+                        <span class="q-option-dot"></span>
+                        <span class="q-option-text">Je procrastine / manque de discipline</span>
+                    </label>
+                </div>
+                <button class="btn-next" id="btn-q3" onclick="goTo(5)">
+                    Continuer
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+
+            <!-- ── ÉCRAN 5 : PREUVE SOCIALE ── -->
+            <div class="screen" id="screen-5">
+                <div class="proof-header">
+                    <div class="q-step-label">Ils étaient exactement à ta place</div>
+                    <h2>Des résultats <span class="red">concrets.</span><br>Pas des promesses.</h2>
+                    <p style="margin-top:10px">Rémi, Quentin, Mathis, Elie, Rayan — parcours différents, une seule méthode.</p>
                 </div>
 
-                <!-- Carousel -->
-                <div class="reviews-carousel">
-                    <div class="carousel-stage" id="carouselStage">
+                <div class="proof-carousel-wrap">
+                    <div class="carousel-stage" id="proofCarousel">
 
                         <!-- Rémi -->
                         <div class="review-card" data-pos="0">
                             <div class="review-video-wrap">
-                                <iframe
-                                    src="https://fast.wistia.net/embed/iframe/7yw39v6tfm?videoFoam=true&autoPlay=false"
+                                <iframe src="https://fast.wistia.net/embed/iframe/7yw39v6tfm?videoFoam=true&autoPlay=false"
                                     allowtransparency="true" frameborder="0" scrolling="no"
-                                    allowfullscreen mozallowfullscreen webkitallowfullscreen
-                                    style="width:100%;height:100%;position:absolute;top:0;left:0;"
-                                ></iframe>
+                                    allowfullscreen mozallowfullscreen webkitallowfullscreen></iframe>
                             </div>
                             <div class="review-footer">
                                 <div class="review-author">
@@ -1281,12 +956,9 @@
                         <!-- Quentin -->
                         <div class="review-card" data-pos="1">
                             <div class="review-video-wrap">
-                                <iframe
-                                    src="https://fast.wistia.net/embed/iframe/uuq255pesz?videoFoam=true&autoPlay=false"
+                                <iframe src="https://fast.wistia.net/embed/iframe/uuq255pesz?videoFoam=true&autoPlay=false"
                                     allowtransparency="true" frameborder="0" scrolling="no"
-                                    allowfullscreen mozallowfullscreen webkitallowfullscreen
-                                    style="width:100%;height:100%;position:absolute;top:0;left:0;"
-                                ></iframe>
+                                    allowfullscreen mozallowfullscreen webkitallowfullscreen></iframe>
                             </div>
                             <div class="review-footer">
                                 <div class="review-author">
@@ -1303,12 +975,9 @@
                         <!-- Mathis -->
                         <div class="review-card mathis-card" data-pos="hidden">
                             <div class="review-video-wrap">
-                                <iframe
-                                    src="https://fast.wistia.net/embed/iframe/vu9vj0kpeh?videoFoam=true&autoPlay=false"
+                                <iframe src="https://fast.wistia.net/embed/iframe/vu9vj0kpeh?videoFoam=true&autoPlay=false"
                                     allowtransparency="true" frameborder="0" scrolling="no"
-                                    allowfullscreen mozallowfullscreen webkitallowfullscreen
-                                    style="width:100%;height:100%;position:absolute;top:0;left:0;"
-                                ></iframe>
+                                    allowfullscreen mozallowfullscreen webkitallowfullscreen></iframe>
                             </div>
                             <div class="review-footer">
                                 <div class="review-author">
@@ -1325,12 +994,9 @@
                         <!-- Elie -->
                         <div class="review-card" data-pos="-1">
                             <div class="review-video-wrap">
-                                <iframe
-                                    src="https://fast.wistia.net/embed/iframe/pm52abgv00?videoFoam=true&autoPlay=false"
+                                <iframe src="https://fast.wistia.net/embed/iframe/pm52abgv00?videoFoam=true&autoPlay=false"
                                     allowtransparency="true" frameborder="0" scrolling="no"
-                                    allowfullscreen mozallowfullscreen webkitallowfullscreen
-                                    style="width:100%;height:100%;position:absolute;top:0;left:0;"
-                                ></iframe>
+                                    allowfullscreen mozallowfullscreen webkitallowfullscreen></iframe>
                             </div>
                             <div class="review-footer">
                                 <div class="review-author">
@@ -1347,12 +1013,9 @@
                         <!-- Rayan -->
                         <div class="review-card" data-pos="hidden">
                             <div class="review-video-wrap">
-                                <iframe
-                                    src="https://fast.wistia.net/embed/iframe/fkq5k9ua9w?videoFoam=true&autoPlay=false"
+                                <iframe src="https://fast.wistia.net/embed/iframe/fkq5k9ua9w?videoFoam=true&autoPlay=false"
                                     allowtransparency="true" frameborder="0" scrolling="no"
-                                    allowfullscreen mozallowfullscreen webkitallowfullscreen
-                                    style="width:100%;height:100%;position:absolute;top:0;left:0;"
-                                ></iframe>
+                                    allowfullscreen mozallowfullscreen webkitallowfullscreen></iframe>
                             </div>
                             <div class="review-footer">
                                 <div class="review-author">
@@ -1369,245 +1032,186 @@
                     </div><!-- /carousel-stage -->
 
                     <div class="carousel-controls">
-                        <button class="carousel-btn" id="carouselPrev" aria-label="Précédent">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+                        <button class="carousel-btn" id="proofPrev" aria-label="Précédent">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
                         </button>
-                        <div class="carousel-dots" id="carouselDots">
+                        <div class="carousel-dots" id="proofDots">
                             <span class="dot active"></span>
                             <span class="dot"></span>
                             <span class="dot"></span>
                             <span class="dot"></span>
                             <span class="dot"></span>
                         </div>
-                        <button class="carousel-btn" id="carouselNext" aria-label="Suivant">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+                        <button class="carousel-btn" id="proofNext" aria-label="Suivant">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
                         </button>
                     </div>
-                </div><!-- /reviews-carousel -->
-
-            </div><!-- /reviews-wrap -->
-        </div><!-- /reviews-inner -->
-    </section>
-
-    <!-- MODAL FORMULAIRE -->
-    <div class="modal-overlay" id="modal" onclick="closeModalOutside(event)">
-        <div class="modal-box">
-            <div class="modal-close" onclick="closeModal()">✕</div>
-
-            <div class="form-body">
-                <div class="form-card-title">Réserve ta place</div>
-                <div class="form-card-sub">Réponds aux questions et laisse tes coordonnées. Je te recontacte sous 24h.</div>
-
-                <!-- Q1 -->
-                <div class="q-block">
-                    <span class="q-label">Où en es-tu aujourd'hui ?</span>
-                    <div class="q-options" data-group="q1">
-                        <label class="q-option" onclick="selectOption(this)">
-                            <input type="radio" name="q1" value="zero">
-                            <span class="q-option-dot"></span>
-                            Je pars de zéro
-                        </label>
-                        <label class="q-option" onclick="selectOption(this)">
-                            <input type="radio" name="q1" value="idee">
-                            <span class="q-option-dot"></span>
-                            J'ai une idée mais je stagne
-                        </label>
-                        <label class="q-option" onclick="selectOption(this)">
-                            <input type="radio" name="q1" value="lance">
-                            <span class="q-option-dot"></span>
-                            Je suis lancé et je veux scaler
-                        </label>
-                    </div>
                 </div>
 
-                <!-- Q2 -->
-                <div class="q-block">
-                    <span class="q-label">Ton objectif principal ?</span>
-                    <div class="q-options" data-group="q2">
-                        <label class="q-option" onclick="selectOption(this)">
-                            <input type="radio" name="q2" value="premier-client">
-                            <span class="q-option-dot"></span>
-                            Signer mon premier client
-                        </label>
-                        <label class="q-option" onclick="selectOption(this)">
-                            <input type="radio" name="q2" value="credibilite">
-                            <span class="q-option-dot"></span>
-                            Développer ma crédibilité
-                        </label>
-                        <label class="q-option" onclick="selectOption(this)">
-                            <input type="radio" name="q2" value="scale">
-                            <span class="q-option-dot"></span>
-                            Scaler mon business actuel
-                        </label>
-                    </div>
+                <button class="btn-cta" onclick="goTo(6)">
+                    Je veux les mêmes résultats
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+
+            <!-- ── ÉCRAN 6 : ÉTAT D'ESPRIT ── -->
+            <div class="screen" id="screen-6">
+                <div class="q-step-label">Question 4 / 4</div>
+                <h2 class="q-title">Quel est ton <span style="color:var(--red)">état d'esprit</span> aujourd'hui ?</h2>
+                <p class="q-sub">On sélectionne seulement les profils alignés.</p>
+                <div class="q-options" data-group="q4">
+                    <label class="q-option" onclick="selectOption(this, 'q4')">
+                        <input type="radio" name="q4" value="pret">
+                        <span class="q-option-dot"></span>
+                        <span class="q-option-text">Je suis prêt à investir pour réussir rapidement</span>
+                    </label>
+                    <label class="q-option" onclick="selectOption(this, 'q4')">
+                        <input type="radio" name="q4" value="sur">
+                        <span class="q-option-dot"></span>
+                        <span class="q-option-text">Je peux investir mais je veux être sûr à 100%</span>
+                    </label>
+                    <label class="q-option" onclick="selectOption(this, 'q4')">
+                        <input type="radio" name="q4" value="pas-pret">
+                        <span class="q-option-dot"></span>
+                        <span class="q-option-text">Je ne suis pas encore prêt à investir</span>
+                    </label>
                 </div>
-
-                <!-- Q3 -->
-                <div class="q-block">
-                    <span class="q-label">Ton objectif de revenu par mois ?</span>
-                    <div class="q-options" data-group="q3">
-                        <label class="q-option" onclick="selectOption(this)">
-                            <input type="radio" name="q3" value="1k-2k">
-                            <span class="q-option-dot"></span>
-                            Entre 1 000 et 2 000 €
-                        </label>
-                        <label class="q-option" onclick="selectOption(this)">
-                            <input type="radio" name="q3" value="2k-4k">
-                            <span class="q-option-dot"></span>
-                            Entre 2 000 et 4 000 €
-                        </label>
-                        <label class="q-option" onclick="selectOption(this)">
-                            <input type="radio" name="q3" value="4k-40k">
-                            <span class="q-option-dot"></span>
-                            Scaler de 4k à 40k €
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Q4 -->
-                <div class="q-block">
-                    <span class="q-label">Tu es prêt à investir combien pour ta réussite ?</span>
-                    <div class="q-options" data-group="q4">
-                        <label class="q-option" onclick="selectOption(this)">
-                            <input type="radio" name="q4" value="600-1200">
-                            <span class="q-option-dot"></span>
-                            600 à 1 200 €
-                        </label>
-                        <label class="q-option" onclick="selectOption(this)">
-                            <input type="radio" name="q4" value="1200-2000">
-                            <span class="q-option-dot"></span>
-                            1 200 à 2 000 €
-                        </label>
-                        <label class="q-option" onclick="selectOption(this)">
-                            <input type="radio" name="q4" value="2500+">
-                            <span class="q-option-dot"></span>
-                            Plus de 2 500 €
-                        </label>
-                    </div>
-                </div>
-
-                <hr class="form-divider">
-
-                <div class="fields-grid">
-                    <div class="field-wrap">
-                        <label>Prénom</label>
-                        <input type="text" id="h-prenom" placeholder="Ton prénom">
-                    </div>
-                    <div class="field-wrap">
-                        <label>Nom</label>
-                        <input type="text" id="h-nom" placeholder="Ton nom">
-                    </div>
-                    <div class="field-wrap full">
-                        <label>Email</label>
-                        <input type="email" id="h-email" placeholder="ton@email.com">
-                    </div>
-                    <div class="field-wrap full">
-                        <label>Téléphone</label>
-                        <input type="tel" id="h-tel" placeholder="06 00 00 00 00">
-                    </div>
-                </div>
-
-                <button class="submit-btn" onclick="submitForm(this)">
-                    Rejoindre la Sphère
+                <button class="btn-next" id="btn-q4" onclick="goTo(7)">
+                    Voir si je suis éligible
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </button>
-                <p class="form-note">Places limitées. Aucun spam, promis.</p>
             </div>
 
-            <div class="form-success" id="hero-form-success">
-                <div class="form-success-icon">✓</div>
-                <h3>Candidature reçue !</h3>
-                <p>Je te recontacte dans les <strong>24h</strong> pour valider ta place dans la Sphère.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- PROGRAMME -->
-    <section class="prog-section">
-        <div class="prog-inner">
-
-            <div class="prog-header">
-                <div class="s-label">Le Programme</div>
-                <h2 class="s-title">De zéro au premier contrat.<br><span style="color:var(--muted);font-weight:500">4 phases. Un seul objectif.</span></h2>
-                <p class="s-desc">La Sphère est structurée en deux piliers — le <strong>Business</strong> (vendre) et la <strong>Technique</strong> (builder). Tu sors avec les deux.</p>
-            </div>
-
-            <div class="prog-grid">
-
-                <div class="prog-card">
-                    <div class="prog-card-top">
-                        <span class="prog-num">01</span>
-                        <span class="prog-tag">Fondations</span>
-                    </div>
-                    <div class="prog-card-title">Branding & Autorité</div>
-                    <p class="prog-card-desc">Tu construis une image d'expert crédible qui rassure les décideurs B2B. Tu identifies ta niche et valides ton offre avant de prospecter.</p>
+            <!-- ── ÉCRAN 7 : CONTACT ── -->
+            <div class="screen" id="screen-7">
+                <div class="contact-header">
+                    <div class="contact-badge">Dernière étape</div>
+                    <h2>On t'envoie ton<br><span style="color:var(--red)">plan personnalisé</span></h2>
+                    <p>On sélectionne seulement les profils sérieux.</p>
                 </div>
 
-                <div class="prog-card">
-                    <div class="prog-card-top">
-                        <span class="prog-num">02</span>
-                        <span class="prog-tag">Acquisition</span>
+                <div class="fields-stack">
+                    <div class="field-wrap">
+                        <label>Prénom</label>
+                        <input type="text" id="c-prenom" placeholder="Ton prénom" autocomplete="given-name">
                     </div>
-                    <div class="prog-card-title">Prospection & Closing</div>
-                    <p class="prog-card-desc">Tu apprends à obtenir des rendez-vous sans spammer, et à closer des clients en maîtrisant les techniques de vente consultative.</p>
+                    <div class="field-wrap">
+                        <label>Email</label>
+                        <input type="email" id="c-email" placeholder="ton@email.com" autocomplete="email">
+                    </div>
+                    <div class="field-wrap">
+                        <label>Téléphone</label>
+                        <input type="tel" id="c-tel" placeholder="06 00 00 00 00" autocomplete="tel">
+                    </div>
                 </div>
 
-                <div class="prog-card">
-                    <div class="prog-card-top">
-                        <span class="prog-num">03</span>
-                        <span class="prog-tag">Technique</span>
-                    </div>
-                    <div class="prog-card-title">Build & Architecture</div>
-                    <p class="prog-card-desc">Tu crées des automatisations puissantes intégrées dans une WebApp. Configuration serveur, stabilité, livrable pro qui justifie ton tarif.</p>
-                </div>
-
-                <div class="prog-card">
-                    <div class="prog-card-top">
-                        <span class="prog-num">04</span>
-                        <span class="prog-tag">Livraison</span>
-                    </div>
-                    <div class="prog-card-title">Déploiement & Scale</div>
-                    <p class="prog-card-desc">Tu déploies chez le client, tu sécurises tes premiers revenus et tu poses les bases d'une relation long terme pour récurrencer.</p>
-                </div>
-
+                <button class="btn-cta" id="btn-submit" onclick="submitForm(this)">
+                    Recevoir mon plan gratuit
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+                <p class="contact-microcopy">
+                    <strong>Aucun spam.</strong> Tes données restent confidentielles.<br>
+                    On te recontacte sous 24h.
+                </p>
             </div>
 
-            </div><!-- /reviews-wrap -->
-        </div>
-    </section>
+            <!-- ── ÉCRAN SUCCESS ── -->
+            <div class="screen" id="screen-success">
+                <div class="success-screen">
+                    <div class="success-icon">🎉</div>
+                    <div class="success-badge">Tu es éligible</div>
+                    <h2>Félicitations,<br><span class="red">profil validé.</span></h2>
+                    <p>
+                        Ton plan personnalisé est en préparation.
+                        Réserve maintenant ton appel stratégique gratuit
+                        pour démarrer dans les <strong>48h</strong>.
+                    </p>
 
-    <!-- FOOTER -->
-    <footer class="footer">
-        <div class="footer-logo">La <span>Sphère</span></div>
-        <div class="footer-copy">&copy; 2025 — Accompagnement premium</div>
-    </footer>
+                    <div class="success-social">
+                        <div class="success-proof-item">
+                            <div class="avatar">R</div>
+                            <div class="info">
+                                <strong>Rémi</strong>
+                                <span>0 connaissance au départ</span>
+                            </div>
+                            <div class="badge">3k€/mois</div>
+                        </div>
+                        <div class="success-proof-item">
+                            <div class="avatar">Q</div>
+                            <div class="info">
+                                <strong>Quentin</strong>
+                                <span>En 4 mois</span>
+                            </div>
+                            <div class="badge">+15k€ contractés</div>
+                        </div>
+                        <div class="success-proof-item">
+                            <div class="avatar">E</div>
+                            <div class="info">
+                                <strong>Elie</strong>
+                                <span>Résultat récurrent</span>
+                            </div>
+                            <div class="badge">4k€/mois</div>
+                        </div>
+                    </div>
+
+                    <a href="#" class="btn-cal">
+                        Réserver mon appel maintenant
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                    <p class="success-note">Places limitées · Appel gratuit · Sans engagement</p>
+                </div>
+            </div>
+
+        </div><!-- /quiz-inner -->
+    </div><!-- /quiz-wrapper -->
 
     <script>
         const SUPABASE_URL  = 'https://nrynnpnsmtfcossqommp.supabase.co';
         const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5yeW5ucG5zbXRmY29zc3FvbW1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc5MDkwNjIsImV4cCI6MjA4MzQ4NTA2Mn0.bDNlJPU3wPrzInzwvWtDAvLWYrkYNoQZVv2TiSTtcvo';
 
-        // Modal
-        function openModal() {
-            document.getElementById('modal').classList.add('active');
-            document.body.style.overflow = 'hidden';
+        const SCREEN_PROGRESS = { 1:0, 2:25, 3:50, 4:65, 5:72, 6:85, 7:95, 'success':100 };
+
+        function setProgress(val) {
+            document.getElementById('progressFill').style.width = val + '%';
+            document.getElementById('progressLabel').textContent = val + '%';
         }
 
-        function closeModal() {
-            document.getElementById('modal').classList.remove('active');
-            document.body.style.overflow = '';
+        function goTo(n) {
+            const current = document.querySelector('.screen.active');
+            if (!current) return;
+            current.style.animation = 'fadeSlideOut 0.24s ease forwards';
+            setTimeout(() => {
+                current.classList.remove('active');
+                current.style.animation = '';
+                const next = document.getElementById('screen-' + n);
+                if (next) {
+                    next.classList.add('active');
+                    setProgress(SCREEN_PROGRESS[n] ?? 0);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            }, 240);
         }
 
-        function closeModalOutside(e) {
-            if (e.target === document.getElementById('modal')) closeModal();
+        function goToSuccess() {
+            const current = document.querySelector('.screen.active');
+            if (!current) return;
+            current.style.animation = 'fadeSlideOut 0.24s ease forwards';
+            setTimeout(() => {
+                current.classList.remove('active');
+                current.style.animation = '';
+                const next = document.getElementById('screen-success');
+                next.classList.add('active');
+                setProgress(100);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 240);
         }
 
-        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
-        // Radio option selection
-        function selectOption(el) {
-            const group = el.closest('.q-options');
-            group.querySelectorAll('.q-option').forEach(o => o.classList.remove('selected'));
+        function selectOption(el, group) {
+            const container = el.closest('.q-options');
+            container.querySelectorAll('.q-option').forEach(o => o.classList.remove('selected'));
             el.classList.add('selected');
+            const btn = document.getElementById('btn-' + group);
+            if (btn) btn.classList.add('ready');
         }
 
         function getRadioValue(name) {
@@ -1616,14 +1220,13 @@
         }
 
         async function submitForm(btn) {
-            const prenom = document.getElementById('h-prenom').value.trim();
-            const nom    = document.getElementById('h-nom').value.trim();
-            const email  = document.getElementById('h-email').value.trim();
-            const tel    = document.getElementById('h-tel').value.trim();
+            const prenom = document.getElementById('c-prenom').value.trim();
+            const email  = document.getElementById('c-email').value.trim();
+            const tel    = document.getElementById('c-tel').value.trim();
 
             if (!prenom || !email || !tel) {
                 shakeBtn(btn);
-                showFormError('Remplis au moins ton prénom, email et téléphone.');
+                showError('Remplis ton prénom, email et téléphone.');
                 return;
             }
 
@@ -1632,17 +1235,17 @@
 
             const payload = {
                 prenom,
-                nom:             nom || null,
                 email,
                 telephone:       tel,
-                situation:        getRadioValue('q1'),
-                objectif:         getRadioValue('q2'),
-                revenu_objectif:  getRadioValue('q3'),
-                budget:           getRadioValue('q4')
+                situation:       getRadioValue('q1'),
+                projection:      getRadioValue('q2'),
+                blocage:         getRadioValue('q3'),
+                investissement:  getRadioValue('q4'),
+                source:          'quiz-v2'
             };
 
             try {
-                const res = await fetch(`${SUPABASE_URL}/rest/v1/leads_sphere`, {
+                const res = await fetch(`${SUPABASE_URL}/rest/v1/leads_quiz`, {
                     method:  'POST',
                     headers: {
                         'Content-Type':  'application/json',
@@ -1655,84 +1258,84 @@
 
                 if (!res.ok) {
                     const err = await res.text();
-                    showFormError(`Erreur ${res.status} : ${err}`);
+                    showError(`Erreur ${res.status} — réessaie.`);
                     btn.disabled = false;
-                    btn.innerHTML = 'Réessayer <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+                    btn.innerHTML = 'Recevoir mon plan gratuit <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
                     return;
                 }
 
-                document.querySelector('.form-card .form-body').style.display = 'none';
-                document.getElementById('hero-form-success').style.display = 'block';
+                goToSuccess();
 
             } catch (e) {
-                console.error('Fetch error:', e);
-                showFormError('Erreur réseau — vérifie ta connexion.');
+                console.error(e);
+                showError('Erreur réseau — vérifie ta connexion.');
                 btn.disabled = false;
-                btn.innerHTML = 'Réessayer <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+                btn.innerHTML = 'Recevoir mon plan gratuit <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
             }
         }
 
-        function showFormError(msg) {
-            let el = document.getElementById('form-error');
+        function showError(msg) {
+            let el = document.getElementById('submit-error');
             if (!el) {
                 el = document.createElement('p');
-                el.id = 'form-error';
+                el.id = 'submit-error';
                 el.style.cssText = 'color:#ff6b6b;font-size:13px;margin-top:10px;text-align:center;';
-                document.querySelector('.submit-btn').after(el);
+                document.getElementById('btn-submit').after(el);
             }
             el.textContent = msg;
         }
 
         function shakeBtn(btn) {
             btn.style.transform = 'translateX(-6px)';
-            setTimeout(() => { btn.style.transform = 'translateX(6px)'; }, 80);
-            setTimeout(() => { btn.style.transform = 'translateX(-4px)'; }, 160);
-            setTimeout(() => { btn.style.transform = 'translateX(0)'; }, 240);
+            setTimeout(() => btn.style.transform = 'translateX(6px)', 80);
+            setTimeout(() => btn.style.transform = 'translateX(-4px)', 160);
+            setTimeout(() => btn.style.transform = 'translateX(0)', 240);
         }
 
-        // Carousel avis clients
+        // ── CAROUSEL AVIS ──
         (function() {
-            const cards = Array.from(document.querySelectorAll('.review-card'));
-            const dots = Array.from(document.querySelectorAll('#carouselDots .dot'));
+            const cards = Array.from(document.querySelectorAll('#proofCarousel .review-card'));
+            const dots  = Array.from(document.querySelectorAll('#proofDots .dot'));
             const n = cards.length;
             let current = 0;
 
             function getPos(i) {
                 const diff = (i - current + n) % n;
-                if (diff === 0) return '0';
-                if (diff === 1) return '1';
+                if (diff === 0)     return '0';
+                if (diff === 1)     return '1';
                 if (diff === n - 1) return '-1';
                 return 'hidden';
             }
 
             function update() {
-                cards.forEach((card, i) => { card.dataset.pos = getPos(i); });
-                dots.forEach((dot, i) => { dot.classList.toggle('active', i === current); });
+                cards.forEach((c, i) => c.dataset.pos = getPos(i));
+                dots.forEach((d, i) => d.classList.toggle('active', i === current));
             }
 
             function next() { current = (current + 1) % n; update(); }
             function prev() { current = (current - 1 + n) % n; update(); }
 
-            document.getElementById('carouselNext').addEventListener('click', next);
-            document.getElementById('carouselPrev').addEventListener('click', prev);
+            document.getElementById('proofNext').addEventListener('click', next);
+            document.getElementById('proofPrev').addEventListener('click', prev);
 
-            cards.forEach(card => {
-                card.addEventListener('click', function() {
-                    if (card.dataset.pos === '1') next();
-                    else if (card.dataset.pos === '-1') prev();
-                });
-            });
+            cards.forEach(card => card.addEventListener('click', () => {
+                if (card.dataset.pos === '1')  next();
+                if (card.dataset.pos === '-1') prev();
+            }));
 
-            // Swipe tactile — sur toute la zone carousel (cartes latérales incluses)
-            let touchStartX = 0;
-            const swipeZone = document.querySelector('.reviews-carousel');
-            swipeZone.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
-            swipeZone.addEventListener('touchend', e => {
-                const dx = e.changedTouches[0].clientX - touchStartX;
+            // Swipe
+            let startX = 0;
+            const zone = document.getElementById('proofCarousel');
+            zone.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+            zone.addEventListener('touchend',   e => {
+                const dx = e.changedTouches[0].clientX - startX;
                 if (dx < -40) next();
                 else if (dx > 40) prev();
             }, { passive: true });
         })();
+
+        // Init
+        setProgress(0);
     </script>
 </body>
 </html>
