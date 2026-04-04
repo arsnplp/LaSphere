@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>La Sphère — Es-tu éligible ?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0b0b0c;
+            --bg-2: #111113;
+            --bg-card: #161618;
+            --red: #cc0000;
+            --red-light: #e60000;
+            --red-dim: rgba(204,0,0,0.12);
+            --border: rgba(255,255,255,0.07);
+            --text: #f0f0f0;
+            --muted: #777780;
+            --muted-2: #4a4a52;
+            --font: 'Inter', sans-serif;
+            --font-title: 'Poppins', sans-serif;
+        }
+
+        html { scroll-behavior: smooth; overflow-x: hidden; }
+
+        body {
+            font-family: var(--font);
+            background:
+                radial-gradient(ellipse 140% 55% at 50% -10%, rgba(160,0,0,0.13) 0%, transparent 55%),
+                radial-gradient(ellipse 80% 40% at 85% 110%, rgba(100,0,0,0.07) 0%, transparent 55%),
+                #080809;
+            color: var(--text);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        /* ── PROGRESS BAR ── */
+        .progress-bar-container {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            background: rgba(11,11,12,0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .logo {
+            font-family: var(--font-title);
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            flex-shrink: 0;
+        }
+        .logo span { color: var(--red); }
+
+        .progress-track {
+            flex: 1;
+            height: 4px;
+            background: rgba(255,255,255,0.07);
+            border-radius: 100px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--red);
+            border-radius: 100px;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 0%;
+        }
+
+        .progress-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--muted);
+            flex-shrink: 0;
+            min-width: 36px;
+            text-align: right;
+        }
+
+        /* ── QUIZ WRAPPER ── */
+        .quiz-wrapper {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 20px 40px;
+        }
+
+        .quiz-inner {
+            width: 100%;
+            max-width: 560px;
+            position: relative;
+        }
+
+        /* ── SCREENS ── */
+        .screen {
+            display: none;
+            animation: fadeSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .screen.active { display: block; }
+
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeSlideOut {
+            from { opacity: 1; transform: translateY(0); }
+            to   { opacity: 0; transform: translateY(-18px); }
+        }
+
+        /* ── SCREEN 1 — HOOK ── */
+        .hook-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--red-dim);
+            border: 1px solid rgba(204,0,0,0.3);
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #ff6b6b;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 28px;
+        }
+
+        .hook-badge::before {
+            content: '';
+            width: 6px; height: 6px;
+            background: var(--red);
+            border-radius: 50%;
+            animation: blink 1.5s ease infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50%       { opacity: 0.3; }
+        }
+
+        .hook-title {
+            font-family: var(--font-title);
+            font-size: clamp(32px, 8vw, 52px);
+            font-weight: 800;
+            letter-spacing: -2px;
+            line-height: 1.05;
+            margin-bottom: 16px;
+        }
+
+        .hook-title .red { color: var(--red); }
+
+        .hook-sub {
+            font-size: 16px;
+            color: var(--muted);
+            line-height: 1.65;
+            margin-bottom: 10px;
+        }
+
+        .hook-timer {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--muted-2);
+            margin-bottom: 36px;
+        }
+
+        .hook-timer span { color: var(--text); font-weight: 600; }
+
+        .hook-trust {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+
+        .trust-pill {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .trust-pill::before {
+            content: '';
+            width: 14px; height: 14px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23cc0000' stroke-width='2.5'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E");
+            background-size: contain; background-repeat: no-repeat; flex-shrink: 0;
+        }
+
+        /* ── BIG CTA BUTTON ── */
+        .btn-cta {
+            width: 100%;
+            background: var(--red);
+            color: #fff;
+            border: none;
+            padding: 18px 28px;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 700;
+            font-family: var(--font);
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 24px rgba(204,0,0,0.35);
+            letter-spacing: -0.3px;
+        }
+
+        .btn-cta:hover {
+            background: var(--red-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(204,0,0,0.45);
+        }
+
+        .btn-cta:active { transform: translateY(0); }
+
+        .btn-cta svg { flex-shrink: 0; }
+
+        /* ── QUESTION SCREENS ── */
+        .q-step-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 12px;
+        }
+
+        .q-title {
+            font-family: var(--font-title);
+            font-size: clamp(22px, 6vw, 32px);
+            font-weight: 700;
+            letter-spacing: -1px;
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+
+        .q-sub {
+            font-size: 14px;
+            color: var(--muted);
+            margin-bottom: 32px;
+            line-height: 1.5;
+        }
+
+        .q-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 28px;
+        }
+
+        .q-option {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 18px;
+            background: rgba(255,255,255,0.03);
+            border: 1.5px solid var(--border);
+            border-radius: 14px;
+            cursor: pointer;
+            font-size: 15px;
+            color: var(--muted);
+            transition: all 0.2s;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .q-option input { display: none; }
+
+        .q-option-dot {
+            width: 20px; height: 20px;
+            border: 2px solid var(--muted-2);
+            border-radius: 50%;
+            flex-shrink: 0;
+            transition: all 0.2s;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .q-option.selected {
+            border-color: var(--red);
+            background: var(--red-dim);
+            color: var(--text);
+            box-shadow: 0 0 0 1px rgba(204,0,0,0.2);
+        }
+
+        .q-option.selected .q-option-dot {
+            border-color: var(--red);
+            background: var(--red);
+        }
+
+        .q-option.selected .q-option-dot::after {
+            content: '';
+            width: 8px; height: 8px;
+            background: #fff;
+            border-radius: 50%;
+        }
+
+        .q-option:hover:not(.selected) {
+            border-color: rgba(204,0,0,0.3);
+            color: var(--text);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .q-option-emoji {
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .q-option-text { flex: 1; line-height: 1.4; }
+
+        .btn-next {
+            width: 100%;
+            background: var(--red);
+            color: #fff;
+            border: none;
+            padding: 17px;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            font-family: var(--font);
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s, box-shadow 0.2s, opacity 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 24px rgba(204,0,0,0.35);
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .btn-next.ready {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .btn-next.ready:hover {
+            background: var(--red-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(204,0,0,0.45);
+        }
+
+        .btn-next.ready:active { transform: translateY(0); }
+
+        /* ── SCREEN 5 — SOCIAL PROOF ── */
+        .proof-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .proof-header h2 {
+            font-family: var(--font-title);
+            font-size: clamp(24px, 6vw, 34px);
+            font-weight: 700;
+            letter-spacing: -1px;
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+
+        .proof-header h2 .red { color: var(--red); }
+
+        .proof-header p {
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .proof-videos {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .proof-video-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        .proof-video-wrap {
+            width: 100%;
+            aspect-ratio: 9/16;
+            background: #0d0d0d;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .proof-video-wrap iframe {
+            width: 100%; height: 100%;
+            border: none; display: block;
+            position: absolute; top: 0; left: 0;
+        }
+
+        .proof-video-footer {
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .proof-avatar {
+            width: 28px; height: 28px;
+            background: var(--red-dim);
+            border: 1px solid rgba(204,0,0,0.25);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 11px;
+            color: var(--red);
+            flex-shrink: 0;
+            margin-right: 8px;
+        }
+
+        .proof-name { font-size: 13px; font-weight: 600; }
+        .proof-result { font-size: 12px; font-weight: 700; color: var(--red); }
+
+        /* ── SCREEN 8 — CONTACT ── */
+        .contact-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .contact-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0,180,60,0.1);
+            border: 1px solid rgba(0,180,60,0.25);
+            padding: 5px 14px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #4ade80;
+            margin-bottom: 20px;
+        }
+
+        .contact-badge::before {
+            content: '🔒';
+            font-size: 12px;
+        }
+
+        .contact-header h2 {
+            font-family: var(--font-title);
+            font-size: clamp(22px, 6vw, 30px);
+            font-weight: 700;
+            letter-spacing: -1px;
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+
+        .contact-header p {
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        .fields-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .field-wrap { display: flex; flex-direction: column; gap: 6px; }
+
+        .field-wrap label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .field-wrap input {
+            background: rgba(255,255,255,0.04);
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 16px;
+            font-size: 15px;
+            color: var(--text);
+            font-family: var(--font);
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            width: 100%;
+        }
+
+        .field-wrap input::placeholder { color: var(--muted-2); }
+
+        .field-wrap input:focus {
+            border-color: var(--red);
+            box-shadow: 0 0 0 3px rgba(204,0,0,0.12);
+        }
+
+        .contact-microcopy {
+            text-align: center;
+            font-size: 12px;
+            color: var(--muted-2);
+            margin-top: 14px;
+            line-height: 1.6;
+        }
+
+        .contact-microcopy strong { color: var(--muted); }
+
+        /* ── SCREEN SUCCESS ── */
+        .success-screen {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .success-icon {
+            width: 80px; height: 80px;
+            background: rgba(0,180,60,0.1);
+            border: 1px solid rgba(0,180,60,0.25);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 36px;
+            margin: 0 auto 24px;
+            animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0); opacity: 0; }
+            to   { transform: scale(1); opacity: 1; }
+        }
+
+        .success-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0,180,60,0.1);
+            border: 1px solid rgba(0,180,60,0.25);
+            padding: 6px 18px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #4ade80;
+            margin-bottom: 20px;
+        }
+
+        .success-screen h2 {
+            font-family: var(--font-title);
+            font-size: clamp(28px, 7vw, 40px);
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            margin-bottom: 12px;
+        }
+
+        .success-screen h2 .red { color: var(--red); }
+
+        .success-screen p {
+            font-size: 15px;
+            color: var(--muted);
+            line-height: 1.65;
+            max-width: 440px;
+            margin: 0 auto 32px;
+        }
+
+        .success-social {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 32px;
+            text-align: left;
+        }
+
+        .success-proof-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 18px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 14px;
+        }
+
+        .success-proof-item .avatar {
+            width: 32px; height: 32px;
+            background: var(--red-dim);
+            border: 1px solid rgba(204,0,0,0.25);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 12px; color: var(--red);
+            flex-shrink: 0;
+        }
+
+        .success-proof-item .info strong { display: block; font-size: 13px; margin-bottom: 2px; }
+        .success-proof-item .info span { font-size: 12px; color: var(--muted); }
+        .success-proof-item .badge {
+            margin-left: auto;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--red);
+        }
+
+        .btn-cal {
+            width: 100%;
+            background: var(--red);
+            color: #fff;
+            border: none;
+            padding: 18px 28px;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 700;
+            font-family: var(--font);
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 24px rgba(204,0,0,0.35);
+            text-decoration: none;
+        }
+
+        .btn-cal:hover {
+            background: var(--red-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(204,0,0,0.45);
+        }
+
+        .success-note {
+            font-size: 12px;
+            color: var(--muted-2);
+            margin-top: 14px;
+        }
+
+        /* ── MICRO COPY ── */
+        .micro-copy {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .micro-item {
+            font-size: 12px;
+            color: var(--muted-2);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* ── SCROLLBAR ── */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: #2a2a2e; border-radius: 3px; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 480px) {
+            .proof-videos { grid-template-columns: 1fr; }
+            .hook-title { letter-spacing: -1.5px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PROGRESS BAR -->
+    <div class="progress-bar-container">
+        <div class="logo">La <span>Sphère</span></div>
+        <div class="progress-track">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-label" id="progressLabel">0%</div>
+    </div>
+
+    <!-- QUIZ WRAPPER -->
+    <div class="quiz-wrapper">
+        <div class="quiz-inner">
+
+            <!-- ── ÉCRAN 1 : HOOK ── -->
+            <div class="screen active" id="screen-1">
+                <div class="hook-badge">Places limitées</div>
+                <h1 class="hook-title">
+                    Prêt à lancer (ou scaler)<br>ton <span class="red">agence IA ?</span>
+                </h1>
+                <p class="hook-sub">
+                    Réponds à <strong>5 questions</strong> — 30 secondes — pour voir si tu es éligible à l'accompagnement.
+                </p>
+                <div class="hook-timer">
+                    ⏱️ &nbsp;<span>30 secondes</span>&nbsp;· Sans engagement · 100% gratuit
+                </div>
+                <div class="hook-trust">
+                    <div class="trust-pill">Résultats en 30–60 jours</div>
+                    <div class="trust-pill">Pas pour tout le monde</div>
+                    <div class="trust-pill">Méthode éprouvée</div>
+                </div>
+                <button class="btn-cta" onclick="goTo(2)">
+                    Commencer
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+                <div class="micro-copy">
+                    <div class="micro-item">🔥 100% des personnes accompagnées ont eu des résultats</div>
+                    <div class="micro-item">⚠️ Pas pour tout le monde — on sélectionne</div>
+                </div>
+            </div>
+
+            <!-- ── ÉCRAN 2 : SITUATION ── -->
+            <div class="screen" id="screen-2">
+                <div class="q-step-label">Question 1 / 5</div>
+                <h2 class="q-title">Où en es-tu aujourd'hui ?</h2>
+                <p class="q-sub">Choisis la situation qui te correspond le mieux.</p>
+                <div class="q-options" data-group="q1">
+                    <label class="q-option" onclick="selectOption(this, 'q1')">
+                        <input type="radio" name="q1" value="zero">
+                        <span class="q-option-dot"></span>
+                        <span class="q-option-emoji">🌱</span>
+                        <span class="q-option-text">Je pars de zéro</span>
+                    </label>
+                    <label class="q-option" onclick="selectOption(this, 'q1')">
+                        <input type="radio" name="q1" value="idee">
+                        <span class="q-option-dot"></span>
+                        <span class="q-option-emoji">💡</span>
+                        <span class="q-option-text">J'ai une idée mais je bloque</span>
+                    </label>
+                    <label class="q-option" onclick="selectOption(this, 'q1')">
+                        <input type="radio" name="q1" value="galere">
+                        <span class="q-option-dot"></span>
+                        <span class="q-option-emoji">⚡</span>
+                        <span class="q-option-text">J'ai déjà commencé mais je galère</span>
+                    </label>
+                    <label class="q-option" onclick="selectOption(this, 'q1')">
+                        <input type="radio" name="q1" value="scale">
+                        <span class="q-option-dot"></span>
+                        <span class="q-option-emoji">🚀</span>
+                        <span class="q-option-text">Je fais déjà du CA mais je veux scaler</span>
+                    </label>
+                </div>
+                <button class="btn-next" id="btn-q1" onclick="goTo(3)">
+                    Continuer
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+
+            <!-- ── ÉCRAN 3 : PROJECTION ── -->
+            <div class="screen" id="screen-3">
+                <div class="q-step-label">Question 2 / 5</div>
+                <h2 class="q-title">Où veux-tu être dans <span style="color:var(--red)">3 mois</span> ?</h2>
+                <p class="q-sub">Visualise ton objectif — c'est ça qui crée la motivation.</p>
+                <div class="q-options" data-group="q2">
+                    <label class="q-option" onclick="selectOption(this, 'q2')">
+                        <input type="radio" name="q2" value="premiers-clients">
+                        <span class="q-option-dot"></span>
+                        <span class="q-option-emoji">🤝</span>
+                        <span class="q-option-text">Signer mes premiers clients</span>
+                    </label>
+                    <label class="q-option" onclick="selectOption(this, 'q2')">
+                        <input type="radio" name="q2" value="2k-5k">
+                        <span class="q-option-dot"></span>
+                        <span class="q-option-emoji">💶</span>
+                        <span class="q-option-text">Générer 2k–5k€/mois</span>
+                    </label>
+                    <label class="q-option" onclick="selectOption(this, 'q2')">
+                        <input type="radio" name="q2" value="5k-10k">
+                        <span class="q-option-dot"></span>
+                        <span class="q-option-emoji">📈</span>
+                        <span class="q-option-text">Passer à 5k–10k€/mois</span>
+                    </label>
+                    <label class="q-option" onclick="selectOption(this, 'q2')">
+                        <input type="radio" name="q2" value="10k+">
+                        <span class="q-option-dot"></span>
+                        <span class="q-option-emoji">🔥</span>
+                        <span class="q-option-text">Dépasser 10k€/mois</span>
+                    </label>
+                </div>
+                <button class="btn-next" id="btn-q2" onclick="goTo(4)">
+                    Continuer
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+
+            <!-- ── ÉCRAN 4 : DOULEUR ── -->
+            <div class="screen" id="screen-4">
+                <div class="q-step-label">Question 3 / 5</div>
+                <h2 class="q-title">Qu'est-ce qui te <span style="color:var(--red)">bloque</span> le plus ?</h2>
+                <p class="q-sub">Sois honnête — c'est ce qui nous permet de t'aider vraiment.</p>
+                <div class="q-options" data-group="q3">
+                    <label class="q-option" onclick="selectOption(this, 'q3')">
+                        <input type="radio" name="q3" value="quoi-vendre">
+                        <span class="q-option-dot"></span>
+                        <span class="q-option-emoji">🎯</span>
+                        <span class="q-option-text">Je ne sais pas quoi vendre</span>
+                    </label>
+                    <label class="q-option" onclick="selectOption(this, 'q3')">
+                        <input type="radio" name="q3" value="trouver-clients">
+                        <span class="q-option-dot"></span>
+                        <span class="q-option-emoji">🔍</span>
+                        <span class="q-option-text">Je ne trouve pas de clients</span>
+                    </label>
+                    <label class="q-option" onclick="selectOption(this, 'q3')">
+                        <input type="radio" name="q3" value="methode">
+                        <span class="q-option-dot"></span>
+                        <span class="q-option-emoji">🗺️</span>
+                        <span class="q-option-text">Je manque de méthode</span>
+                    </label>
+                    <label class="q-option" onclick="selectOption(this, 'q3')">
+                        <input type="radio" name="q3" value="discipline">
+                        <span class="q-option-dot"></span>
+                        <span class="q-option-emoji">⏳</span>
+                        <span class="q-option-text">Je procrastine / manque de discipline</span>
+                    </label>
+                </div>
+                <button class="btn-next" id="btn-q3" onclick="goTo(5)">
+                    Continuer
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+
+            <!-- ── ÉCRAN 5 : PREUVE SOCIALE ── -->
+            <div class="screen" id="screen-5">
+                <div class="proof-header">
+                    <div class="q-step-label" style="text-align:center">Ils étaient à ta place 👇</div>
+                    <h2>Des résultats <span class="red">concrets.</span><br>Pas des promesses.</h2>
+                    <p style="margin-top:10px">Rémi, Quentin, Elie — parcours différents, une seule méthode.</p>
+                </div>
+
+                <div class="proof-videos">
+                    <!-- Rémi -->
+                    <div class="proof-video-card">
+                        <div class="proof-video-wrap">
+                            <iframe
+                                src="https://fast.wistia.net/embed/iframe/7yw39v6tfm?videoFoam=true&autoPlay=false"
+                                allowtransparency="true" frameborder="0" scrolling="no"
+                                allowfullscreen mozallowfullscreen webkitallowfullscreen>
+                            </iframe>
+                        </div>
+                        <div class="proof-video-footer">
+                            <div class="proof-avatar">R</div>
+                            <div class="proof-name">Rémi</div>
+                            <div class="proof-result">3k€/mois</div>
+                        </div>
+                    </div>
+
+                    <!-- Elie -->
+                    <div class="proof-video-card">
+                        <div class="proof-video-wrap">
+                            <iframe
+                                src="https://fast.wistia.net/embed/iframe/pm52abgv00?videoFoam=true&autoPlay=false"
+                                allowtransparency="true" frameborder="0" scrolling="no"
+                                allowfullscreen mozallowfullscreen webkitallowfullscreen>
+                            </iframe>
+                        </div>
+                        <div class="proof-video-footer">
+                            <div class="proof-avatar">E</div>
+                            <div class="proof-name">Elie</div>
+                            <div class="proof-result">4k€/mois</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-cta" onclick="goTo(6)">
+                    Je veux les mêmes résultats
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+
+            <!-- ── ÉCRAN 6 : QUALIFICATION FINANCIÈRE ── -->
+            <div class="screen" id="screen-6">
+                <div class="q-step-label">Question 4 / 5</div>
+                <h2 class="q-title">Combien veux-tu <span style="color:var(--red)">générer</span> par mois ?</h2>
+                <p class="q-sub">Cela nous aide à te proposer la meilleure stratégie.</p>
+                <div class="q-options" data-group="q4">
+                    <label class="q-option" onclick="selectOption(this, 'q4')">
+                        <input type="radio" name="q4" value="1k-2k">
+                        <span class="q-option-dot"></span>
+                        <span class="q-option-emoji">💰</span>
+                        <span class="q-option-text">1k–2k€/mois</span>
+                    </label>
+                    <label class="q-option" onclick="selectOption(this, 'q4')">
+                        <input type="radio" name="q4" value="2k-5k">
+                        <span class="q-option-dot"></span>
+                        <span class="q-option-emoji">💰💰</span>
+                        <span class="q-option-text">2k–5k€/mois</span>
+                    </label>
+                    <label class="q-option" onclick="selectOption(this, 'q4')">
+                        <input type="radio" name="q4" value="5k-10k">
+                        <span class="q-option-dot"></span>
+                        <span class="q-option-emoji">🚀</span>
+                        <span class="q-option-text">5k–10k€/mois</span>
+                    </label>
+                    <label class="q-option" onclick="selectOption(this, 'q4')">
+                        <input type="radio" name="q4" value="10k+">
+                        <span class="q-option-dot"></span>
+                        <span class="q-option-emoji">🔥</span>
+                        <span class="q-option-text">10k€+/mois</span>
+                    </label>
+                </div>
+                <button class="btn-next" id="btn-q4" onclick="goTo(7)">
+                    Continuer
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+
+            <!-- ── ÉCRAN 7 : ÉTAT D'ESPRIT ── -->
+            <div class="screen" id="screen-7">
+                <div class="q-step-label">Question 5 / 5</div>
+                <h2 class="q-title">Quel est ton <span style="color:var(--red)">état d'esprit</span> aujourd'hui ?</h2>
+                <p class="q-sub">Sois honnête — on ne sélectionne que des profils alignés.</p>
+                <div class="q-options" data-group="q5">
+                    <label class="q-option" onclick="selectOption(this, 'q5')">
+                        <input type="radio" name="q5" value="pret">
+                        <span class="q-option-dot"></span>
+                        <span class="q-option-emoji">✅</span>
+                        <span class="q-option-text">Je suis prêt à investir pour réussir rapidement</span>
+                    </label>
+                    <label class="q-option" onclick="selectOption(this, 'q5')">
+                        <input type="radio" name="q5" value="sur">
+                        <span class="q-option-dot"></span>
+                        <span class="q-option-emoji">🤔</span>
+                        <span class="q-option-text">Je peux investir mais je veux être sûr à 100%</span>
+                    </label>
+                    <label class="q-option" onclick="selectOption(this, 'q5')">
+                        <input type="radio" name="q5" value="pas-pret">
+                        <span class="q-option-dot"></span>
+                        <span class="q-option-emoji">⏸️</span>
+                        <span class="q-option-text">Je ne suis pas encore prêt à investir</span>
+                    </label>
+                </div>
+                <button class="btn-next" id="btn-q5" onclick="goTo(8)">
+                    Voir si je suis éligible
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+
+            <!-- ── ÉCRAN 8 : CONTACT ── -->
+            <div class="screen" id="screen-8">
+                <div class="contact-header">
+                    <div class="contact-badge">Dernière étape</div>
+                    <h2>On t'envoie ton<br><span style="color:var(--red)">plan personnalisé</span></h2>
+                    <p style="margin-top:10px">On sélectionne seulement les profils sérieux.</p>
+                </div>
+
+                <div class="fields-stack">
+                    <div class="field-wrap">
+                        <label>Prénom</label>
+                        <input type="text" id="c-prenom" placeholder="Ton prénom" autocomplete="given-name">
+                    </div>
+                    <div class="field-wrap">
+                        <label>Email</label>
+                        <input type="email" id="c-email" placeholder="ton@email.com" autocomplete="email">
+                    </div>
+                    <div class="field-wrap">
+                        <label>Téléphone</label>
+                        <input type="tel" id="c-tel" placeholder="06 00 00 00 00" autocomplete="tel">
+                    </div>
+                </div>
+
+                <button class="btn-cta" id="btn-submit" onclick="submitForm(this)">
+                    Recevoir mon plan gratuit
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+                <p class="contact-microcopy">
+                    <strong>Aucun spam.</strong> Tes données restent confidentielles.
+                    <br>On te recontacte sous 24h.
+                </p>
+            </div>
+
+            <!-- ── ÉCRAN SUCCESS ── -->
+            <div class="screen" id="screen-success">
+                <div class="success-screen">
+                    <div class="success-icon">🎉</div>
+                    <div class="success-badge">Tu es éligible !</div>
+                    <h2>Félicitations,<br><span class="red">profil validé.</span></h2>
+                    <p>
+                        Ton plan personnalisé est en préparation.
+                        Réserve maintenant ton appel stratégique gratuit
+                        pour démarrer dans les <strong>48h</strong>.
+                    </p>
+
+                    <div class="success-social">
+                        <div class="success-proof-item">
+                            <div class="avatar">R</div>
+                            <div class="info">
+                                <strong>Rémi</strong>
+                                <span>0 connaissance au départ</span>
+                            </div>
+                            <div class="badge">3k€/mois</div>
+                        </div>
+                        <div class="success-proof-item">
+                            <div class="avatar">Q</div>
+                            <div class="info">
+                                <strong>Quentin</strong>
+                                <span>En 4 mois</span>
+                            </div>
+                            <div class="badge">+15k€ contractés</div>
+                        </div>
+                        <div class="success-proof-item">
+                            <div class="avatar">E</div>
+                            <div class="info">
+                                <strong>Elie</strong>
+                                <span>Résultat récurrent</span>
+                            </div>
+                            <div class="badge">4k€/mois</div>
+                        </div>
+                    </div>
+
+                    <a href="#" class="btn-cal" id="cal-link">
+                        Réserver mon appel maintenant
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                    <p class="success-note">⏳ Places limitées — appel gratuit, sans engagement</p>
+                </div>
+            </div>
+
+        </div><!-- /quiz-inner -->
+    </div><!-- /quiz-wrapper -->
+
+    <script>
+        const SUPABASE_URL  = 'https://nrynnpnsmtfcossqommp.supabase.co';
+        const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5yeW5ucG5zbXRmY29zc3FvbW1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc5MDkwNjIsImV4cCI6MjA4MzQ4NTA2Mn0.bDNlJPU3wPrzInzwvWtDAvLWYrkYNoQZVv2TiSTtcvo';
+
+        // Screen config: screen number → progress percentage
+        const SCREEN_PROGRESS = {
+            1: 0,
+            2: 20,
+            3: 40,
+            4: 55,
+            5: 65,
+            6: 75,
+            7: 87,
+            8: 95,
+            'success': 100
+        };
+
+        let currentScreen = 1;
+
+        function setProgress(val) {
+            document.getElementById('progressFill').style.width = val + '%';
+            document.getElementById('progressLabel').textContent = val + '%';
+        }
+
+        function goTo(n) {
+            const current = document.querySelector('.screen.active');
+            if (current) {
+                current.style.animation = 'fadeSlideOut 0.25s ease forwards';
+                setTimeout(() => {
+                    current.classList.remove('active');
+                    current.style.animation = '';
+                    const next = document.getElementById('screen-' + n);
+                    if (next) {
+                        next.classList.add('active');
+                        currentScreen = n;
+                        const prog = SCREEN_PROGRESS[n] ?? 0;
+                        setProgress(prog);
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                }, 250);
+            }
+        }
+
+        function goToSuccess() {
+            const current = document.querySelector('.screen.active');
+            if (current) {
+                current.style.animation = 'fadeSlideOut 0.25s ease forwards';
+                setTimeout(() => {
+                    current.classList.remove('active');
+                    current.style.animation = '';
+                    const next = document.getElementById('screen-success');
+                    next.classList.add('active');
+                    setProgress(100);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 250);
+            }
+        }
+
+        function selectOption(el, group) {
+            const container = el.closest('.q-options');
+            container.querySelectorAll('.q-option').forEach(o => o.classList.remove('selected'));
+            el.classList.add('selected');
+            // Enable the next button
+            const btnId = 'btn-' + group;
+            const btn = document.getElementById(btnId);
+            if (btn) btn.classList.add('ready');
+        }
+
+        function getRadioValue(name) {
+            const checked = document.querySelector(`input[name="${name}"]:checked`);
+            return checked ? checked.value : null;
+        }
+
+        async function submitForm(btn) {
+            const prenom = document.getElementById('c-prenom').value.trim();
+            const email  = document.getElementById('c-email').value.trim();
+            const tel    = document.getElementById('c-tel').value.trim();
+
+            if (!prenom || !email || !tel) {
+                shakeBtn(btn);
+                showError('Remplis ton prénom, email et téléphone.');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = 'Envoi en cours… <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+
+            const payload = {
+                prenom,
+                email,
+                telephone:       tel,
+                situation:       getRadioValue('q1'),
+                projection:      getRadioValue('q2'),
+                blocage:         getRadioValue('q3'),
+                revenu_objectif: getRadioValue('q4'),
+                investissement:  getRadioValue('q5'),
+                source:          'quiz-v2'
+            };
+
+            try {
+                const res = await fetch(`${SUPABASE_URL}/rest/v1/leads_sphere`, {
+                    method:  'POST',
+                    headers: {
+                        'Content-Type':  'application/json',
+                        'apikey':        SUPABASE_ANON,
+                        'Authorization': `Bearer ${SUPABASE_ANON}`,
+                        'Prefer':        'return=minimal'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!res.ok) {
+                    const err = await res.text();
+                    showError(`Erreur ${res.status} — réessaie.`);
+                    btn.disabled = false;
+                    btn.innerHTML = 'Recevoir mon plan gratuit <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+                    return;
+                }
+
+                goToSuccess();
+
+            } catch (e) {
+                console.error(e);
+                showError('Erreur réseau — vérifie ta connexion.');
+                btn.disabled = false;
+                btn.innerHTML = 'Recevoir mon plan gratuit <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+            }
+        }
+
+        function showError(msg) {
+            let el = document.getElementById('submit-error');
+            if (!el) {
+                el = document.createElement('p');
+                el.id = 'submit-error';
+                el.style.cssText = 'color:#ff6b6b;font-size:13px;margin-top:10px;text-align:center;';
+                document.getElementById('btn-submit').after(el);
+            }
+            el.textContent = msg;
+        }
+
+        function shakeBtn(btn) {
+            btn.style.transform = 'translateX(-6px)';
+            setTimeout(() => { btn.style.transform = 'translateX(6px)'; }, 80);
+            setTimeout(() => { btn.style.transform = 'translateX(-4px)'; }, 160);
+            setTimeout(() => { btn.style.transform = 'translateX(0)'; }, 240);
+        }
+
+        // Init
+        setProgress(0);
+    </script>
+</body>
+</html>
