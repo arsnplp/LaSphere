@@ -1338,9 +1338,14 @@
                     return;
                 }
 
-                const data = await res.json();
-                const newLead = data[0];
+                // Insert OK — récupère le lead (fallback sur payload si parsing échoue)
+                let newLead = payload;
+                try {
+                    const data = await res.json();
+                    if (data && data[0]) newLead = data[0];
+                } catch (_) {}
 
+                // Appel Edge Function — toujours exécuté après insert réussi
                 fetch('https://nrynnpnsmtfcossqommp.supabase.co/functions/v1/send-lead-email', {
                     method:  'POST',
                     headers: { 'Content-Type': 'application/json' },
