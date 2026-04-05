@@ -1325,7 +1325,7 @@
                         'Content-Type':  'application/json',
                         'apikey':        SUPABASE_ANON,
                         'Authorization': `Bearer ${SUPABASE_ANON}`,
-                        'Prefer':        'return=representation'
+                        'Prefer':        'return=minimal'
                     },
                     body: JSON.stringify(payload)
                 });
@@ -1338,12 +1338,8 @@
                     return;
                 }
 
-                // Insert OK — récupère le lead (fallback sur payload si parsing échoue)
-                let newLead = payload;
-                try {
-                    const data = await res.json();
-                    if (data && data[0]) newLead = data[0];
-                } catch (_) {}
+                // Insert OK — on utilise payload directement (return=minimal ne renvoie rien)
+                const newLead = payload;
 
                 // Appel Edge Function — toujours exécuté après insert réussi
                 fetch('https://nrynnpnsmtfcossqommp.supabase.co/functions/v1/send-lead-email', {
