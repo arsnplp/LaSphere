@@ -1341,11 +1341,11 @@
                 const data = await res.json();
                 const newLead = data[0];
 
-                await fetch('https://nrynnpnsmtfcossqommp.supabase.co/functions/v1/send-lead-email', {
+                fetch('https://nrynnpnsmtfcossqommp.supabase.co/functions/v1/send-lead-email', {
                     method:  'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body:    JSON.stringify({ lead: newLead })
-                });
+                }).catch(err => console.error('Erreur envoi email:', err));
 
                 goToSuccess();
 
