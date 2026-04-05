@@ -1325,7 +1325,7 @@
                         'Content-Type':  'application/json',
                         'apikey':        SUPABASE_ANON,
                         'Authorization': `Bearer ${SUPABASE_ANON}`,
-                        'Prefer':        'return=minimal'
+                        'Prefer':        'return=representation'
                     },
                     body: JSON.stringify(payload)
                 });
@@ -1337,6 +1337,15 @@
                     btn.innerHTML = 'Recevoir mon plan gratuit <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
                     return;
                 }
+
+                const data = await res.json();
+                const newLead = data[0];
+
+                await fetch('https://nrynnpnsmtfcossqommp.supabase.co/functions/v1/send-lead-email', {
+                    method:  'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body:    JSON.stringify({ lead: newLead })
+                });
 
                 goToSuccess();
 
